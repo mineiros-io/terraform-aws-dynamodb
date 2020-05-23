@@ -6,6 +6,11 @@
 # OUTPUT ALL RESOURCES AS FULL OBJECTS
 # ------------------------------------------------------------------------------
 
+output "table" {
+  description = "The dynamodb_table object."
+  value       = aws_dynamodb_table.table
+}
+
 # ------------------------------------------------------------------------------
 # OUTPUT ALL INPUT VARIABLES
 # ------------------------------------------------------------------------------
