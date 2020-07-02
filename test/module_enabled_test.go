@@ -1,0 +1,32 @@
+package test
+
+import (
+	"testing"
+
+	"github.com/gruntwork-io/terratest/modules/terraform"
+	"github.com/stretchr/testify/assert"
+)
+
+//TestModuleEnabled : Tests that no resources are being created
+// when `module_enabled` is set to `false`
+func TestModuleEnabled(t *testing.T) {
+	t.Parallel()
+
+	terraformOptions := &terraform.Options{
+		TerraformDir: "./module-enabled",
+		Vars: map[string]interface{}{
+			"aws_region": "us-east-1",
+		},
+		Upgrade: true,
+	}
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	stdout := terraform.InitAndApplyAndIdempotent(t, terraformOptions)
+
+	// Validate that Terraform didn't create, change or destroy any resources
+	resourceCount := terraform.GetResourceCount(t, stdout)
+	assert.Equal(t, 0, resourceCount.Add, "No resources should have been created. Found %d instead.", resourceCount.Add)
+	assert.Equal(t, 0, resourceCount.Change, "No resources should have been changed. Found %d instead.", resourceCount.Change)
+	assert.Equal(t, 0, resourceCount.Destroy, "No resources should have been destroyed. Found %d instead.", resourceCount.Destroy)
+}
