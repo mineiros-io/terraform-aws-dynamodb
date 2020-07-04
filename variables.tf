@@ -49,9 +49,9 @@ variable "write_capacity" {
   default     = 5
 }
 
-variable "tags" {
+variable "table_tags" {
   type        = map(string)
-  description = "(Optional) tags"
+  description = "(Optional) A map of tags to populate on the created table."
   default     = {}
 }
 
@@ -76,6 +76,12 @@ variable "module_enabled" {
   type        = bool
   description = "(Optional) Whether to create resources within the module or not. Default is true."
   default     = true
+}
+
+variable "module_tags" {
+  description = "(Optional) A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be overwritten by resource-specific tags."
+  type        = map(string)
+  default     = {}
 }
 
 variable "module_depends_on" {

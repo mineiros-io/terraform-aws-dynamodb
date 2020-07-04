@@ -18,7 +18,8 @@ resource "aws_dynamodb_table" "table" {
   billing_mode   = var.billing_mode
   read_capacity  = local.read_capacity
   write_capacity = local.write_capacity
-  tags           = var.tags
+
+  tags = merge(var.module_tags, var.table_tags)
 
   server_side_encryption {
     enabled     = var.server_side_encryption
