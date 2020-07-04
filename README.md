@@ -33,29 +33,22 @@ secure, and production-grade cloud infrastructure.
 
 ## Module Features
 
-In contrast to the plain `terraform_resource` resource this module has better features.
-While all security features can be disabled as needed best practices
-are pre-configured.
-
-These are some of our custom features:
+This is the feature set supported by this module:
 
 - **Default Security Settings**:
-  secure by default by setting security to `true`, additional security can be added by setting some feature to `enabled`
+  Encryption at rest is enabled by default in AWS DynamoDB using the AWS owned Master key.
 
 - **Standard Module Features**:
-  Cool Feature of the main resource, tags
-
-- **Extended Module Features**:
-  Awesome Extended Feature of an additional related resource,
-  and another Cool Feature
-
-- **Additional Features**:
-  a Cool Feature that is not actually a resource but a cool set up from us
+  DynamoDB Table,
+  Global Tables V2 replication configuration,
+  DynamoDB Streams,
+  TTL,
+  Custom Encryption Key via KMS
 
 - *Features not yet implemented*:
-  Standard Features missing,
-  Extended Features planned,
-  Additional Features planned
+  Local secondary index,
+  Global secondary index,
+  Point in Time Recovery
 
 ## Getting Started
 
