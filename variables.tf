@@ -49,6 +49,18 @@ variable "ttl_attribute_name" {
   default     = null
 }
 
+variable "stream_enabled" {
+  type        = bool
+  description = "(Optional) Indicates whether Streams are to be enabled (true) or disabled (false)."
+  default     = false
+}
+
+variable "stream_view_type" {
+  type        = string
+  description = "(Optional) When an item in the table is modified, StreamViewType determines what information is written to the table's stream. Valid values are KEYS_ONLY, NEW_IMAGE, OLD_IMAGE, NEW_AND_OLD_IMAGES."
+  default     = null
+}
+
 variable "billing_mode" {
   type        = string
   description = "(Optional) Controls how you are charged for read and write throughput and how you manage capacity. The valid values are PROVISIONED and PAY_PER_REQUEST."

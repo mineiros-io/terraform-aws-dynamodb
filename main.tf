@@ -21,6 +21,9 @@ resource "aws_dynamodb_table" "table" {
   read_capacity  = local.read_capacity
   write_capacity = local.write_capacity
 
+  stream_enabled   = var.stream_enabled
+  stream_view_type = var.stream_view_type
+
   tags = merge(var.module_tags, var.table_tags)
 
   server_side_encryption {
