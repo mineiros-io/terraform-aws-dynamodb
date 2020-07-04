@@ -61,6 +61,12 @@ variable "stream_view_type" {
   default     = null
 }
 
+variable "replica_region_names" {
+  type        = set(string)
+  description = "(Optional) A set of region names of replicas (DynamoDB Global Tables V2 (version 2019.11.21) configuration)"
+  default     = []
+}
+
 variable "billing_mode" {
   type        = string
   description = "(Optional) Controls how you are charged for read and write throughput and how you manage capacity. The valid values are PROVISIONED and PAY_PER_REQUEST."

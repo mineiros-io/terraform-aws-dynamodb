@@ -49,5 +49,13 @@ resource "aws_dynamodb_table" "table" {
     }
   }
 
+  dynamic "replica" {
+    for_each = var.replica_region_names
+
+    content {
+      region_name = replica.each.key
+    }
+  }
+
   depends_on = [var.module_depends_on]
 }
