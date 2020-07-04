@@ -12,8 +12,10 @@ locals {
 resource "aws_dynamodb_table" "table" {
   count = var.module_enabled ? 1 : 0
 
-  name     = var.name
-  hash_key = var.hash_key
+  name = var.name
+
+  hash_key  = var.hash_key
+  range_key = var.range_key
 
   billing_mode   = var.billing_mode
   read_capacity  = local.read_capacity

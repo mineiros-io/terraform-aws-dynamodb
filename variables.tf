@@ -31,6 +31,12 @@ variable "attributes" {
 # These variables have defaults, but may be overridden.
 # ------------------------------------------------------------------------------
 
+variable "range_key" {
+  type        = string
+  description = "(Optional, Forces new resource) The attribute to use as the range (sort) key. Must also be defined as an attribute, see below."
+  default     = null
+}
+
 variable "billing_mode" {
   type        = string
   description = "(Optional) Controls how you are charged for read and write throughput and how you manage capacity. The valid values are PROVISIONED and PAY_PER_REQUEST."
