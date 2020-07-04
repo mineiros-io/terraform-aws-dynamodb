@@ -37,5 +37,14 @@ resource "aws_dynamodb_table" "table" {
     }
   }
 
+  dynamic "ttl" {
+    for_each = var.ttl_attribute_name != null ? [true] : []
+
+    content {
+      enabled        = var.ttl_enabled == null ? true : var.ttl_enabled
+      attribute_name = var.ttl_attribute_name
+    }
+  }
+
   depends_on = [var.module_depends_on]
 }

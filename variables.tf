@@ -37,6 +37,18 @@ variable "range_key" {
   default     = null
 }
 
+variable "ttl_enabled" {
+  type        = bool
+  description = "Indicates whether ttl is enabled (true) or disabled (false). Defaults to true if ttl_attribute_name is set."
+  default     = null
+}
+
+variable "ttl_attribute_name" {
+  type        = string
+  description = "(Optional) The name of the table attribute to store the TTL timestamp in."
+  default     = null
+}
+
 variable "billing_mode" {
   type        = string
   description = "(Optional) Controls how you are charged for read and write throughput and how you manage capacity. The valid values are PROVISIONED and PAY_PER_REQUEST."
