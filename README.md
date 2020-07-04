@@ -8,9 +8,8 @@
 
 # terraform-aws-dynamodb
 
-A [Terraform] base module for [Amazon Web Services (AWS)][AWS].
+A [Terraform] base module for managing a DynamoDB Table [Amazon Web Services (AWS)][AWS].
 
-***This module supports both, Terraform v0.13 as well as v0.12.20 and above.***
 
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
@@ -22,8 +21,6 @@ secure, and production-grade cloud infrastructure.
   - [Top-level Arguments](#top-level-arguments)
     - [Module Configuration](#module-configuration)
     - [Main Resource Configuration](#main-resource-configuration)
-    - [Extended Resource Configuration](#extended-resource-configuration)
-  - [`some_block` Object Arguments](#some_block-object-arguments)
 - [Module Attributes Reference](#module-attributes-reference)
 - [External Documentation](#external-documentation)
 - [Module Versioning](#module-versioning)
@@ -83,11 +80,6 @@ See [variables.tf] and [examples/] for details and use-cases.
   Specifies whether resources in the module will be created.
   Default is `true`.
 
-- **`module_defaults`**: *(Optional `map(default_values)`)*
-
-  Default settings that overwrite the module and resource defaults in this module.
-  Default is `{}`.
-
 - **`module_tags`**: *(Optional `map(string)`)*
 
   A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be
@@ -100,9 +92,86 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Main Resource Configuration
 
-#### Extended Resource Configuration
+- **`name`**: **(Required `string`)**
 
-### [`some_block`](#main-resource-configuration) Object Arguments
+  The name of the table, this needs to be unique within a region.
+
+- **`hash_key`**: **(Required `string`, Forces new resource)**
+
+  The attribute to use as the hash (partition) key. Must also be defined as an attribute, see below.
+
+- **`billing_mode`**: *(Optional `string`)*
+
+  Controls how you are charged for read and write throughput and how you manage capacity.
+  The valid values are `PROVISIONED` and `PAY_PER_REQUEST`.
+  Defaults is `"PROVISIONED"`.
+
+- **`range_key`**: *(Optional, Forces new resource)*
+
+  The attribute to use as the range (sort) key. Must also be defined as an attribute, see below.
+
+- **`write_capacity`**: *(Optional `number`)*
+
+  The number of write units for this table. If the billing_mode is PROVISIONED, this field is required.
+
+- **`read_capacity`**: *(Optional `number`)*
+
+  The number of read units for this table. If the billing_mode is PROVISIONED, this field is required.
+
+- **`attribute`**: *(Required `map(string)`)*
+
+  Map of attribute definitions. Only required for `hash_key` and `range_key` attributes.
+  The map key is the attribute name.
+  The map value is the type of the attribute, which must be a scalar type: S, N, or B for (S)tring, (N)umber or (B)inary data.
+
+  ```
+  hask_key = "LockID"
+
+  attributes = {
+    LockID = "S"
+  }
+  ```
+
+- **`ttl_attribute_name`**: *(Optional `string`)*
+
+  The name of the table attribute to store the TTL timestamp in.
+  Default is not to store TTL timestamp.
+
+- **`ttl_enabled`**: *(Optional `bool`)*
+
+  Indicates whether ttl is enabled (`true`) or disabled (`false`).
+  Default is `true` when `ttl_attribute_name` is set.
+
+- **`replica_region_names`**: *(Optional `set(string)`)*
+
+  A set of region names to configure DynamoDB Global Tables V2 (version 2019.11.21) replication configurations.
+  Default is `[]`.
+
+  ```
+  replica_region_names = ["eu-west-1", "us-east-1"]
+  ```
+
+- **`stream_enabled`**: *(Optional `bool`)*
+
+  Indicates whether Streams are to be enabled (`true`) or disabled (`false`).
+  Default is `false`.
+
+- **`stream_view_type`**: *(Optional `string`)*
+
+  When an item in the table is modified, StreamViewType determines what information is written to the table's stream.
+  Valid values are `KEYS_ONLY`, `NEW_IMAGE`, `OLD_IMAGE`, `NEW_AND_OLD_IMAGES`.
+
+- **`kms_key_arn`**: *(Optional `string`)*
+
+  The ARN of the CMK that should be used for the AWS KMS encryption.
+  AWS DynamoDB tables are automatically encrypted at rest with an AWS owned Customer Master Key if this argument isn't specified.
+  This attribute should only be specified if the key is different from the default DynamoDB CMK, `alias/aws/dynamodb`.
+  Default is to use the AWS owned Master key `alias/aws/dynamodb`.
+
+- **`table_tags`**: *(Optional `map(string)`)*
+
+  A map of tags to populate on the created table. This will be merged with `module_tags`.
+  Default is `{}`.
 
 ## Module Attributes Reference
 
@@ -112,30 +181,22 @@ The following attributes are exported by the module:
 
   Whether this module is enabled.
 
-- **`module_defaults`**
-
-  Default settings that overwrite the module and resource defaults in this module.
-
 - **`module_tags`**
 
   The map of tags that are being applied to all created resources that accept tags.
 
-- **`output_1`**
+- **`table`**
 
-  The full `resource` object with all its attributes.
+  The full `aws_dynamodb_table` object with all its attributes.
 
 ## External Documentation
 
 - AWS Documentation IAM:
-  - Roles: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html
-  - Policies: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies.html
-  - Instance Profile: https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html
+  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html
+  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html
 
 - Terraform AWS Provider Documentation:
-  - https://www.terraform.io/docs/providers/aws/r/iam_role.html
-  - https://www.terraform.io/docs/providers/aws/r/iam_role_policy.html
-  - https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
-  - https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
+  - https://www.terraform.io/docs/providers/aws/r/dynamodb_table.html
 
 ## Module Versioning
 
