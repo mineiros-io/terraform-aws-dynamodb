@@ -23,7 +23,7 @@ variable "hash_key" {
 
 variable "attributes" {
   type        = map(string)
-  description = "(Required) List of nested attribute definitions."
+  description = "(Required) List of nested attribute definitions. Only required for hash_key and range_key attributes."
 }
 
 # ------------------------------------------------------------------------------
@@ -33,19 +33,19 @@ variable "attributes" {
 
 variable "billing_mode" {
   type        = string
-  description = "(Optional) billing_mode"
+  description = "(Optional) Controls how you are charged for read and write throughput and how you manage capacity. The valid values are PROVISIONED and PAY_PER_REQUEST."
   default     = "PROVISIONED"
 }
 
 variable "read_capacity" {
   type        = number
-  description = "(Optional) read_capacity"
+  description = "(Optional) The number of read units for this table. If the billing_mode is PROVISIONED, this field is required."
   default     = 5
 }
 
 variable "write_capacity" {
   type        = number
-  description = "(Optional) write_capacity"
+  description = "(Optional) The number of write units for this table. If the billing_mode is PROVISIONED, this field is required."
   default     = 5
 }
 
