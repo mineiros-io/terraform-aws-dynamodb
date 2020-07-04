@@ -23,7 +23,7 @@ variable "hash_key" {
 
 variable "attributes" {
   type        = map(string)
-  description = "(Required) List of nested attribute definitions."
+  description = "(Required) List of nested attribute definitions. Only required for hash_key and range_key attributes."
 }
 
 # ------------------------------------------------------------------------------
@@ -31,39 +31,69 @@ variable "attributes" {
 # These variables have defaults, but may be overridden.
 # ------------------------------------------------------------------------------
 
+variable "range_key" {
+  type        = string
+  description = "(Optional, Forces new resource) The attribute to use as the range (sort) key. Must also be defined as an attribute, see below."
+  default     = null
+}
+
+variable "ttl_enabled" {
+  type        = bool
+  description = "Indicates whether ttl is enabled (true) or disabled (false). Defaults to true if ttl_attribute_name is set."
+  default     = null
+}
+
+variable "ttl_attribute_name" {
+  type        = string
+  description = "(Optional) The name of the table attribute to store the TTL timestamp in."
+  default     = null
+}
+
+variable "stream_enabled" {
+  type        = bool
+  description = "(Optional) Indicates whether Streams are to be enabled (true) or disabled (false)."
+  default     = false
+}
+
+variable "stream_view_type" {
+  type        = string
+  description = "(Optional) When an item in the table is modified, StreamViewType determines what information is written to the table's stream. Valid values are KEYS_ONLY, NEW_IMAGE, OLD_IMAGE, NEW_AND_OLD_IMAGES."
+  default     = null
+}
+
+variable "replica_region_names" {
+  type        = set(string)
+  description = "(Optional) A set of region names of replicas (DynamoDB Global Tables V2 (version 2019.11.21) configuration)"
+  default     = []
+}
+
 variable "billing_mode" {
   type        = string
-  description = "(Optional) billing_mode"
+  description = "(Optional) Controls how you are charged for read and write throughput and how you manage capacity. The valid values are PROVISIONED and PAY_PER_REQUEST."
   default     = "PROVISIONED"
 }
 
 variable "read_capacity" {
   type        = number
-  description = "(Optional) read_capacity"
+  description = "(Optional) The number of read units for this table. If the billing_mode is PROVISIONED, this field is required."
   default     = 5
 }
 
 variable "write_capacity" {
   type        = number
-  description = "(Optional) write_capacity"
+  description = "(Optional) The number of write units for this table. If the billing_mode is PROVISIONED, this field is required."
   default     = 5
 }
 
-variable "tags" {
+variable "table_tags" {
   type        = map(string)
-  description = "(Optional) tags"
+  description = "(Optional) A map of tags to populate on the created table."
   default     = {}
-}
-
-variable "server_side_encryption" {
-  type        = bool
-  description = "(Optional) server_side_encryption"
-  default     = true
 }
 
 variable "kms_key_arn" {
   type        = string
-  description = "(Optional) kms_key_arn"
+  description = "(Optional) The ARN of the CMK that should be used for the AWS KMS encryption. This attribute should only be specified if the key is different from the default DynamoDB CMK, alias/aws/dynamodb."
   default     = null
 }
 
@@ -76,6 +106,12 @@ variable "module_enabled" {
   type        = bool
   description = "(Optional) Whether to create resources within the module or not. Default is true."
   default     = true
+}
+
+variable "module_tags" {
+  description = "(Optional) A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be overwritten by resource-specific tags."
+  type        = map(string)
+  default     = {}
 }
 
 variable "module_depends_on" {
