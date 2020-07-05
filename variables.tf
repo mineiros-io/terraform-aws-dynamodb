@@ -49,6 +49,12 @@ variable "ttl_attribute_name" {
   default     = null
 }
 
+variable "point_in_time_recovery_enabled" {
+  type        = bool
+  description = "Whether to enable point-in-time recovery - note that it can take up to 10 minutes to enable for new tables."
+  default     = false
+}
+
 variable "stream_enabled" {
   type        = bool
   description = "(Optional) Indicates whether Streams are to be enabled (true) or disabled (false)."
@@ -95,6 +101,18 @@ variable "kms_key_arn" {
   type        = string
   description = "(Optional) The ARN of the CMK that should be used for the AWS KMS encryption. This attribute should only be specified if the key is different from the default DynamoDB CMK, alias/aws/dynamodb."
   default     = null
+}
+
+variable "local_secondary_indexes" {
+  type        = any
+  description = "(Optional, Forces new resource) Describe an LSI on the table; these can only be allocated at creation so you cannot change this definition after you have created the resource."
+  default     = []
+}
+
+variable "global_secondary_indexes" {
+  type        = any
+  description = "(Optional) Describe a GSI for the table; subject to the normal limits on the number of GSIs, projected attributes, etc."
+  default     = []
 }
 
 # ------------------------------------------------------------------------------

@@ -10,7 +10,6 @@
 
 A [Terraform] base module for managing a DynamoDB Table [Amazon Web Services (AWS)][AWS].
 
-
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
 secure, and production-grade cloud infrastructure.
@@ -43,12 +42,13 @@ This is the feature set supported by this module:
   Global Tables V2 replication configuration,
   DynamoDB Streams,
   TTL,
-  Custom Encryption Key via KMS
+  Point in Time Recovery,
+  Custom Encryption Key via KMS,
+  Local Secondary Indexes (LSI),
+  Global secondary index (GSI)
 
 - *Features not yet implemented*:
-  Local secondary index,
-  Global secondary index,
-  Point in Time Recovery
+  Auto-scaling
 
 ## Getting Started
 
@@ -111,7 +111,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The number of read units for this table. If the billing_mode is PROVISIONED, this field is required.
 
-- **`attribute`**: *(Required `map(string)`)*
+- **`attributes`**: **(Required `map(string)`)**
 
   Map of attribute definitions. Only required for `hash_key` and `range_key` attributes.
   The map key is the attribute name.
@@ -125,6 +125,15 @@ See [variables.tf] and [examples/] for details and use-cases.
   }
   ```
 
+  **A note about attributes**
+
+  Only define attributes on the table object that are going to be used as:
+
+  - Table hash key or range key
+  - LSI or GSI hash key or range key
+
+  The DynamoDB API expects attribute structure (name and type) to be passed along when creating or updating GSI/LSIs or creating the initial table. In these cases it expects the Hash / Range keys to be provided; because these get re-used in numerous places (i.e the table's range key could be a part of one or more GSIs), they are stored on the table object to prevent duplication and increase consistency. If you add attributes here that are not used in these scenarios it can cause an infinite loop in planning.
+
 - **`ttl_attribute_name`**: *(Optional `string`)*
 
   The name of the table attribute to store the TTL timestamp in.
@@ -134,6 +143,11 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Indicates whether ttl is enabled (`true`) or disabled (`false`).
   Default is `true` when `ttl_attribute_name` is set.
+
+- **`point_in_time_recovery_enabled`**: *(Optional `bool`)*
+
+  Whether to enable point-in-time recovery - note that it can take up to 10 minutes to enable for new tables.
+  Default is `false`.
 
 - **`replica_region_names`**: *(Optional `set(string)`)*
 
@@ -161,6 +175,76 @@ See [variables.tf] and [examples/] for details and use-cases.
   This attribute should only be specified if the key is different from the default DynamoDB CMK, `alias/aws/dynamodb`.
   Default is to use the AWS owned Master key `alias/aws/dynamodb`.
 
+- **`local_secondary_indexes`**: *(Optional `list(local_secondary_index)`, Forces new resource)*
+
+  Describe an LSI on the table; these can only be allocated at creation so you cannot change this definition after you have created the resource.
+  Default is `[]`.
+
+  ```
+  local_secondary_indexes = [
+    {
+      name               = "someName"
+      range_key          = "someKey"
+      projection_type    = "ALL"
+      non_key_attributes = []
+    }
+  ]
+  ```
+
+  Each element in the list of `local_secondary_indexes` is an object with the following attributes:
+
+  - **`name`**: **(Required `string`)**
+
+    The name of the index.
+
+  - **`range_key`**: **(Required `string`)**
+
+    The name of the range key; must be defined.
+
+  - **`projection_type`**: **(Required `string`)**
+
+    One of `ALL`, `INCLUDE` or `KEYS_ONLY` where `ALL` projects every attribute into the index, `KEYS_ONLY` projects just the hash and range key into the index, and `INCLUDE` projects only the keys specified in the non_key_attributes parameter.
+
+  - **`non_key_attributes`**: *(Optional `list(string)`)*
+
+    Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
+
+- **`global_secondary_indexes`**: *(Optional `list(global_secondary_index)`)*
+
+  Describe a GSI for the table; subject to the normal limits on the number of GSIs, projected attributes, etc.
+  Default is `[]`.
+
+  Each element in the list of `global_secondary_indexes` is an object with the following attributes:
+
+  - **`name`**: **(Required `string`)**
+
+    The name of the index.
+
+  - **`write_capacity`**: *(Optional `number`)*
+
+    The number of write units for this index. Must be set if billing_mode is set to `PROVISIONED`.
+
+  - **`read_capacity`**: *(Optional `number`)*
+
+    The number of read units for this index. Must be set if billing_mode is set to `PROVISIONED`.
+
+  - **`hash_key`**: **(Required `string`)**
+
+    The name of the hash key in the index; must be defined as an attribute in the resource.
+
+  - **`range_key`**: *(Optional `string`)*
+
+    The name of the range key; must be defined.
+
+  - **`projection_type`**: **(Required `string`)**
+
+    One of `ALL`, `INCLUDE` or `KEYS_ONLY` where `ALL` projects every attribute into the index, `KEYS_ONLY` projects just the hash and range key into the index, and `INCLUDE` projects only the keys specified in the non_key_attributes parameter.
+
+  - **`non_key_attributes`**: *(Optional `list(string)`)*
+
+    Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
+    Default is `[]`.
+
 - **`table_tags`**: *(Optional `map(string)`)*
 
   A map of tags to populate on the created table. This will be merged with `module_tags`.
@@ -173,6 +257,10 @@ The following attributes are exported by the module:
 - **`module_enabled`**
 
   Whether this module is enabled.
+
+- **`module_inputs`**
+
+  A map of all module arguments. Omitted optional arguments will be represented with their actual defaults.
 
 - **`module_tags`**
 

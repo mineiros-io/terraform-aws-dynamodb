@@ -5,6 +5,8 @@
 locals {
   read_capacity  = var.billing_mode == "PROVISIONED" ? var.read_capacity : null
   write_capacity = var.billing_mode == "PROVISIONED" ? var.write_capacity : null
+  ttl_enabled    = var.ttl_attribute_name != null && var.ttl_enabled == null ? true : var.ttl_enabled
+  table_tags     = merge(var.module_tags, var.table_tags)
 }
 
 resource "aws_dynamodb_table" "table" {
@@ -22,7 +24,7 @@ resource "aws_dynamodb_table" "table" {
   stream_enabled   = var.stream_enabled
   stream_view_type = var.stream_view_type
 
-  tags = merge(var.module_tags, var.table_tags)
+  tags = local.table_tags
 
   server_side_encryption {
     enabled     = length(var.kms_key_arn) != null ? true : false
@@ -42,9 +44,13 @@ resource "aws_dynamodb_table" "table" {
     for_each = var.ttl_attribute_name != null ? [true] : []
 
     content {
-      enabled        = var.ttl_enabled == null ? true : var.ttl_enabled
+      enabled        = local.ttl_enabled
       attribute_name = var.ttl_attribute_name
     }
+  }
+
+  point_in_time_recovery {
+    enabled = var.point_in_time_recovery_enabled
   }
 
   dynamic "replica" {
@@ -52,6 +58,32 @@ resource "aws_dynamodb_table" "table" {
 
     content {
       region_name = replica.each.key
+    }
+  }
+
+  dynamic "local_secondary_index" {
+    for_each = var.local_secondary_indexes
+
+    content {
+      name               = each.value.name
+      range_key          = each.value.range_key
+      projection_type    = each.value.projection_type
+      non_key_attributes = try(each.value.non_key_attributes, null)
+    }
+  }
+
+  dynamic "global_secondary_index" {
+    for_each = var.global_secondary_indexes
+
+    content {
+      name            = each.value.name
+      hash_key        = each.value.hash_key
+      projection_type = each.value.projection_type
+
+      write_capacity     = try(each.value.write_capacity, null)
+      read_capacity      = try(each.value.read_capacity, null)
+      range_key          = try(each.value.range_key, null)
+      non_key_attributes = try(each.value.non_key_attributes, null)
     }
   }
 
