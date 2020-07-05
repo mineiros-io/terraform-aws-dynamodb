@@ -5,6 +5,7 @@
 locals {
   read_capacity  = var.billing_mode == "PROVISIONED" ? var.read_capacity : null
   write_capacity = var.billing_mode == "PROVISIONED" ? var.write_capacity : null
+  table_tags     = merge(var.module_tags, var.table_tags)
 }
 
 resource "aws_dynamodb_table" "table" {
@@ -22,7 +23,7 @@ resource "aws_dynamodb_table" "table" {
   stream_enabled   = var.stream_enabled
   stream_view_type = var.stream_view_type
 
-  tags = merge(var.module_tags, var.table_tags)
+  tags = local.table_tags
 
   server_side_encryption {
     enabled     = length(var.kms_key_arn) != null ? true : false

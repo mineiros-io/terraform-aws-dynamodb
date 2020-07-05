@@ -249,6 +249,10 @@ The following attributes are exported by the module:
 
   Whether this module is enabled.
 
+- **`module_inputs`**
+
+  A map of all module arguments. Omitted optional arguments will be represented with their actual defaults.
+
 - **`module_tags`**
 
   The map of tags that are being applied to all created resources that accept tags.
