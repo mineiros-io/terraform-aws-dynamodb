@@ -22,7 +22,6 @@ output "module_inputs" {
     hash_key                       = var.hash_key
     attributes                     = var.attributes
     range_key                      = var.range_key
-    ttl_enabled                    = var.ttl_enabled
     ttl_attribute_name             = var.ttl_attribute_name
     point_in_time_recovery_enabled = var.point_in_time_recovery_enabled
     stream_enabled                 = var.stream_enabled
@@ -36,6 +35,7 @@ output "module_inputs" {
     # computed defaults
     read_capacity  = local.read_capacity
     write_capacity = local.write_capacity
+    ttl_enabled    = local.ttl_enabled
     table_tags     = local.table_tags
   }
 }

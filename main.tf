@@ -5,6 +5,7 @@
 locals {
   read_capacity  = var.billing_mode == "PROVISIONED" ? var.read_capacity : null
   write_capacity = var.billing_mode == "PROVISIONED" ? var.write_capacity : null
+  ttl_enabled    = var.ttl_attribute_name != null && var.ttl_enabled == null ? true : var.ttl_enabled
   table_tags     = merge(var.module_tags, var.table_tags)
 }
 
@@ -43,7 +44,7 @@ resource "aws_dynamodb_table" "table" {
     for_each = var.ttl_attribute_name != null ? [true] : []
 
     content {
-      enabled        = var.ttl_enabled == null ? true : var.ttl_enabled
+      enabled        = local.ttl_enabled
       attribute_name = var.ttl_attribute_name
     }
   }
