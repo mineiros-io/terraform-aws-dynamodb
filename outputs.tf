@@ -8,7 +8,7 @@
 
 output "table" {
   description = "The dynamodb_table object."
-  value       = aws_dynamodb_table.table
+  value       = try(aws_dynamodb_table.table[0], null)
 }
 
 # ------------------------------------------------------------------------------
