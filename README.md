@@ -10,7 +10,6 @@
 
 A [Terraform] base module for managing a DynamoDB Table [Amazon Web Services (AWS)][AWS].
 
-
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
 secure, and production-grade cloud infrastructure.
@@ -45,10 +44,11 @@ This is the feature set supported by this module:
   TTL,
   Point in Time Recovery,
   Custom Encryption Key via KMS,
-  Local Secondary Indexes (LSI)
+  Local Secondary Indexes (LSI),
+  Global secondary index (GSI)
 
 - *Features not yet implemented*:
-  Global secondary index
+  Auto-scaling
 
 ## Getting Started
 
@@ -199,6 +199,42 @@ See [variables.tf] and [examples/] for details and use-cases.
   - **`non_key_attributes`**: *(Optional `list(string)`)*
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
+
+- **`global_secondary_indexes`**: *(Optional `list(global_secondary_index)`)*
+
+  Describe a GSI for the table; subject to the normal limits on the number of GSIs, projected attributes, etc.
+  Default is `[]`.
+
+  Each element in the list of `global_secondary_indexes` is an object with the following attributes:
+
+  - **`name`**: **(Required `string`)**
+
+    The name of the index.
+
+  - **`write_capacity`**: *(Optional `number`)*
+
+    The number of write units for this index. Must be set if billing_mode is set to `PROVISIONED`.
+
+  - **`read_capacity`**: *(Optional `number`)*
+
+    The number of read units for this index. Must be set if billing_mode is set to `PROVISIONED`.
+
+  - **`hash_key`**: **(Required `string`)**
+
+    The name of the hash key in the index; must be defined as an attribute in the resource.
+
+  - **`range_key`**: *(Optional `string`)*
+
+    The name of the range key; must be defined.
+
+  - **`projection_type`**: **(Required `string`)**
+
+    One of `ALL`, `INCLUDE` or `KEYS_ONLY` where `ALL` projects every attribute into the index, `KEYS_ONLY` projects just the hash and range key into the index, and `INCLUDE` projects only the keys specified in the non_key_attributes parameter.
+
+  - **`non_key_attributes`**: *(Optional `list(string)`)*
+
+    Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
+    Default is `[]`.
 
 - **`table_tags`**: *(Optional `map(string)`)*
 

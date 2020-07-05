@@ -109,6 +109,12 @@ variable "local_secondary_indexes" {
   default     = []
 }
 
+variable "global_secondary_indexes" {
+  type        = any
+  description = "(Optional) Describe a GSI for the table; subject to the normal limits on the number of GSIs, projected attributes, etc."
+  default     = []
+}
+
 # ------------------------------------------------------------------------------
 # MODULE CONFIGURATION PARAMETERS
 # These variables are used to configure the module.
