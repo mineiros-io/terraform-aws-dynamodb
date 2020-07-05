@@ -47,6 +47,10 @@ resource "aws_dynamodb_table" "table" {
     }
   }
 
+  point_in_time_recovery {
+    enabled = var.point_in_time_recovery_enabled
+  }
+
   dynamic "replica" {
     for_each = var.replica_region_names
 

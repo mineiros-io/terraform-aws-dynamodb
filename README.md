@@ -43,12 +43,12 @@ This is the feature set supported by this module:
   Global Tables V2 replication configuration,
   DynamoDB Streams,
   TTL,
+  Point in Time Recovery,
   Custom Encryption Key via KMS,
   Local Secondary Indexes (LSI)
 
 - *Features not yet implemented*:
-  Global secondary index,
-  Point in Time Recovery
+  Global secondary index
 
 ## Getting Started
 
@@ -111,7 +111,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   The number of read units for this table. If the billing_mode is PROVISIONED, this field is required.
 
-- **`attribute`**: *(Required `map(string)`)*
+- **`attributes`**: *(Required `map(string)`)*
 
   Map of attribute definitions. Only required for `hash_key` and `range_key` attributes.
   The map key is the attribute name.
@@ -134,6 +134,11 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Indicates whether ttl is enabled (`true`) or disabled (`false`).
   Default is `true` when `ttl_attribute_name` is set.
+
+- **`point_in_time_recovery_enabled`**: *(Optional `bool`)*
+
+  Whether to enable point-in-time recovery - note that it can take up to 10 minutes to enable for new tables.
+  Default is `false`.
 
 - **`replica_region_names`**: *(Optional `set(string)`)*
 
