@@ -43,10 +43,10 @@ This is the feature set supported by this module:
   Global Tables V2 replication configuration,
   DynamoDB Streams,
   TTL,
-  Custom Encryption Key via KMS
+  Custom Encryption Key via KMS,
+  Local Secondary Indexes (LSI)
 
 - *Features not yet implemented*:
-  Local secondary index,
   Global secondary index,
   Point in Time Recovery
 
@@ -160,6 +160,40 @@ See [variables.tf] and [examples/] for details and use-cases.
   AWS DynamoDB tables are automatically encrypted at rest with an AWS owned Customer Master Key if this argument isn't specified.
   This attribute should only be specified if the key is different from the default DynamoDB CMK, `alias/aws/dynamodb`.
   Default is to use the AWS owned Master key `alias/aws/dynamodb`.
+
+- **`local_secondary_indexes`**: *(Optional `list(local_secondary_index)`, Forces new resource)*
+
+  Describe an LSI on the table; these can only be allocated at creation so you cannot change this definition after you have created the resource.
+  Default is `[]`.
+
+  ```
+  local_secondary_indexes = [
+    {
+      name               = "someName"
+      range_key          = "someKey"
+      projection_type    = "ALL"
+      non_key_attributes = []
+    }
+  ]
+  ```
+
+  Each element in the list of `local_secondary_indexes` is an object with the following attributes:
+
+  - **`name`**: **(Required `string`)**
+
+    The name of the index.
+
+  - **`range_key`**: **(Required `string`)**
+
+    The name of the range key; must be defined.
+
+  - **`projection_type`**: **(Required `string`)**
+
+    One of `ALL`, `INCLUDE` or `KEYS_ONLY` where `ALL` projects every attribute into the index, `KEYS_ONLY` projects just the hash and range key into the index, and `INCLUDE` projects only the keys specified in the non_key_attributes parameter.
+
+  - **`non_key_attributes`**: *(Optional `list(string)`)*
+
+    Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
 
 - **`table_tags`**: *(Optional `map(string)`)*
 

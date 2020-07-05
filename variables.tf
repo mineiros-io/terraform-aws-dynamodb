@@ -97,6 +97,12 @@ variable "kms_key_arn" {
   default     = null
 }
 
+variable "local_secondary_indexes" {
+  type        = any
+  description = "(Optional, Forces new resource) Describe an LSI on the table; these can only be allocated at creation so you cannot change this definition after you have created the resource."
+  default     = []
+}
+
 # ------------------------------------------------------------------------------
 # MODULE CONFIGURATION PARAMETERS
 # These variables are used to configure the module.

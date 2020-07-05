@@ -55,5 +55,16 @@ resource "aws_dynamodb_table" "table" {
     }
   }
 
+  dynamic "local_secondary_index" {
+    for_each = var.local_secondary_indexes
+
+    content {
+      name               = each.value.name
+      range_key          = each.value.range_key
+      projection_type    = each.value.projection_type
+      non_key_attributes = try(each.value.non_key_attributes, null)
+    }
+  }
+
   depends_on = [var.module_depends_on]
 }
