@@ -22,7 +22,8 @@ func TestModuleEnabled(t *testing.T) {
 
 	defer terraform.Destroy(t, terraformOptions)
 
-	stdout := terraform.InitAndApplyAndIdempotent(t, terraformOptions)
+	terraform.InitAndPlan(t, terraformOptions)
+	stdout := terraform.ApplyAndIdempotent(t, terraformOptions)
 
 	// Validate that Terraform didn't create, change or destroy any resources
 	resourceCount := terraform.GetResourceCount(t, stdout)
