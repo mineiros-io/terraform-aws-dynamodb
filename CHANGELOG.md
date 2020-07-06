@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add global secondary index (GSI) support
 - Add `module_inputs` output
 - Add `CHANGELOG.md`
+- Add unit tests for minimal, complete, and disabled feature sets
 
 ### Changed
 - Update build-system
