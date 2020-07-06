@@ -34,7 +34,8 @@ module "test" {
 
   stream_view_type = "KEYS_ONLY"
 
-  replica_region_names = ["eu-west-1"]
+  # disabled as deployment takes very long
+  # replica_region_names = ["eu-west-1"]
 
   global_secondary_indexes = [
     {
