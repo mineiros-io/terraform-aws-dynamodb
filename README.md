@@ -56,7 +56,15 @@ Most basic usage just setting required arguments:
 
 ```hcl
 module "terraform-aws-dynamodb" {
-  source = "git@github.com:mineiros-io/terraform-aws-dynamodb.git?ref=v0.0.1"
+  source  = "mineiros-io/dynamodb/aws"
+  version = "0.1.0"
+
+  name     = "MyTable"
+  hash_key = "HashKey"
+
+  attributes = {
+    HashKey = "S"
+  }
 }
 ```
 
