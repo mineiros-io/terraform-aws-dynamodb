@@ -6,13 +6,27 @@
 
 # What this example shows
 
-This example shows how to ...
+This example shows how to implement support for [DynamoDB Global Tables V2 (version 2019.11.21)][globalv2].
 
 ## Basic usage
 
-The code in [main.tf] defines...
+The code in [main.tf] defines the following module configuration:
 
 ```hcl
+module "terraform-aws-dynamodb" {
+  source = "mineiros-io/dynamodb/aws"
+  verion = "0.0.2"
+
+  name         = "global"
+  hash_key     = "MyKey"
+  billing_mode = "PAY_PER_REQUEST"
+
+  attributes = {
+    MyKey = "S"
+  }
+
+  replica_region_names = ["eu-west-1"]
+}
 ```
 
 ## Running the example
@@ -21,7 +35,7 @@ The code in [main.tf] defines...
 
 ```bash
 git clone https://github.com/mineiros-io/terraform-aws-dynamodb.git
-cd terraform-aws-dynamodb/examples/example
+cd terraform-aws-dynamodb/examples/dynamodb-global-table-v2
 ```
 
 ### Initializing Terraform
@@ -43,8 +57,10 @@ Run `terraform destroy` to destroy all resources again.
 
 <!-- References -->
 
+[globalv2]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html
+
 <!-- markdown-link-check-disable -->
-[main.tf]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/example/main.tf
+[main.tf]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/dynamodb-global-table-v2/main.tf
 <!-- markdown-link-check-enable -->
 
 [homepage]: https://mineiros.io/?ref=terraform-aws-dynamodb
