@@ -7,6 +7,8 @@ locals {
   write_capacity = var.billing_mode == "PROVISIONED" ? var.write_capacity : null
   ttl_enabled    = var.ttl_attribute_name != null && var.ttl_enabled == null ? true : var.ttl_enabled
   table_tags     = merge(var.module_tags, var.table_tags)
+
+  stream_enabled = var.stream_enabled == null && var.stream_view_type != null ? true : var.stream_enabled
 }
 
 resource "aws_dynamodb_table" "table" {
@@ -21,7 +23,7 @@ resource "aws_dynamodb_table" "table" {
   read_capacity  = local.read_capacity
   write_capacity = local.write_capacity
 
-  stream_enabled   = var.stream_enabled
+  stream_enabled   = local.stream_enabled
   stream_view_type = var.stream_view_type
 
   tags = local.table_tags
