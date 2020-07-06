@@ -58,7 +58,7 @@ variable "point_in_time_recovery_enabled" {
 variable "stream_enabled" {
   type        = bool
   description = "(Optional) Indicates whether Streams are to be enabled (true) or disabled (false)."
-  default     = false
+  default     = null
 }
 
 variable "stream_view_type" {

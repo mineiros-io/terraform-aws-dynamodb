@@ -24,7 +24,6 @@ output "module_inputs" {
     range_key                      = var.range_key
     ttl_attribute_name             = var.ttl_attribute_name
     point_in_time_recovery_enabled = var.point_in_time_recovery_enabled
-    stream_enabled                 = var.stream_enabled
     stream_view_type               = var.stream_view_type
     replica_region_names           = var.replica_region_names
     billing_mode                   = var.billing_mode
@@ -37,6 +36,7 @@ output "module_inputs" {
     write_capacity = local.write_capacity
     ttl_enabled    = local.ttl_enabled
     table_tags     = local.table_tags
+    stream_enabled = local.stream_enabled
   }
 }
 
