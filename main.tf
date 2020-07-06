@@ -59,7 +59,7 @@ resource "aws_dynamodb_table" "table" {
     for_each = var.replica_region_names
 
     content {
-      region_name = replica.each.key
+      region_name = replica.key
     }
   }
 
