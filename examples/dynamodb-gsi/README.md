@@ -14,8 +14,8 @@ The code in [main.tf] defines the following module configuration:
 
 ```hcl
 module "terraform-aws-dynamodb" {
-  source = "mineiros-io/dynamodb/aws"
-  verion = "0.0.2"
+  source  = "mineiros-io/dynamodb/aws"
+  version = "~> 0.1.0"
 
   name           = "GameScores"
   billing_mode   = "PROVISIONED"
