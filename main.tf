@@ -65,12 +65,13 @@ resource "aws_dynamodb_table" "table" {
 
   dynamic "local_secondary_index" {
     for_each = var.local_secondary_indexes
+    iterator = index
 
     content {
-      name               = each.value.name
-      range_key          = each.value.range_key
-      projection_type    = each.value.projection_type
-      non_key_attributes = try(each.value.non_key_attributes, null)
+      name               = index.value.name
+      range_key          = index.value.range_key
+      projection_type    = index.value.projection_type
+      non_key_attributes = try(index.value.non_key_attributes, null)
     }
   }
 
