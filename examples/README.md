@@ -7,11 +7,15 @@
 
 # Examples for using this Mineiros module
 
-- [example/] Create a Resource.
+- [dynamodb-global-table-v2/] Create a DynamoDB Global Tables V2
+- [dynamodb-gsi/] Create a DynamoDB table with a global secondary index.
+- [dynamodb-streams/] Create a DynamoDB Table and a DynamoDB Streams configuration.
 
 <!-- References -->
 <!-- markdown-link-check-disable -->
-[example/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/example
+[dynamodb-global-table-v2/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/dynamodb-global-table-v2
+[dynamodb-gsi/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/dynamodb-gsi
+[dynamodb-streams/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/dynamodb-streams
 <!-- markdown-link-check-enable -->
 
 [homepage]: https://mineiros.io/?ref=terraform-aws-dynamodb

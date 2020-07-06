@@ -57,7 +57,7 @@ Most basic usage just setting required arguments:
 ```hcl
 module "terraform-aws-dynamodb" {
   source  = "mineiros-io/dynamodb/aws"
-  version = "0.1.0"
+  version = "~> 0.1.0"
 
   name     = "MyTable"
   hash_key = "HashKey"
