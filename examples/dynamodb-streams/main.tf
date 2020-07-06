@@ -1,26 +1,22 @@
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# EXAMPLE FULL USAGE OF THE terraform-aws-dynamodb MODULE
+# EXAMPLE DYNAMODB STREAMS
 #
-# And some more meaningful information.
+# The following dynamodb table description models the table and a stream configuration.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 module "terraform-aws-dynamodb" {
-  source = "git@github.com:mineiros-io/terraform-aws-dynamodb.git?ref=v0.0.1"
+  source = "mineiros-io/dynamodb/aws"
+  verion = "0.0.2"
 
-  # All required module arguments
+  name         = "example"
+  hash_key     = "TestTableHashKey"
+  billing_mode = "PAY_PER_REQUEST"
 
-  # none
+  stream_view_type = "NEW_AND_OLD_IMAGES"
 
-  # All optional module arguments set to the default values
-
-  # none
-
-  # All optional module configuration arguments set to the default values.
-  # Those are maintained for terraform 0.12 but can still be used in terraform 0.13
-  # Starting with terraform 0.13 you can additionally make use of module level
-  # count, for_each and depends_on features.
-  module_enabled    = true
-  module_depends_on = []
+  attributes = {
+    TestTableHashKey = "S"
+  }
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
@@ -29,6 +25,7 @@ module "terraform-aws-dynamodb" {
 
 provider "aws" {
   version = "~> 2.0"
+  region  = "us-east-1"
 }
 
 # ----------------------------------------------------------------------------------------------------------------------
