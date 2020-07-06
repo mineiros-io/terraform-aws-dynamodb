@@ -77,16 +77,18 @@ resource "aws_dynamodb_table" "table" {
 
   dynamic "global_secondary_index" {
     for_each = var.global_secondary_indexes
+    iterator = index
 
     content {
-      name            = each.value.name
-      hash_key        = each.value.hash_key
-      projection_type = each.value.projection_type
+      name            = index.value.name
+      hash_key        = index.value.hash_key
+      projection_type = index.value.projection_type
 
-      write_capacity     = try(each.value.write_capacity, null)
-      read_capacity      = try(each.value.read_capacity, null)
-      range_key          = try(each.value.range_key, null)
-      non_key_attributes = try(each.value.non_key_attributes, null)
+      write_capacity = var.billing_mode == "PROVISIONED" ? try(index.value.write_capacity, null) : null
+      read_capacity  = var.billing_mode == "PROVISIONED" ? try(index.value.read_capacity, null) : null
+
+      range_key          = try(index.value.range_key, null)
+      non_key_attributes = try(index.value.non_key_attributes, null)
     }
   }
 
