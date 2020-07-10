@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2020-07-10
+### Changed
+- Update build-system
+
+### Fixed
+- Fix version constraint and require aws provider >= 2.58 for replica support
+
 ## [0.1.0] - 2020-07-06
 ### Added
 - Add `module_enabled` test
@@ -38,7 +45,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for Server Side Encryption (SSE)
 
 <!-- markdown-link-check-disable -->
-[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.1...HEAD
+[0.1.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.0...v0.1.1
+<!-- markdown-link-check-disabled -->
 [0.1.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/mineiros-io/terraform-module-template/releases/tag/v0.0.1
-<!-- markdown-link-check-disabled -->
