@@ -34,6 +34,8 @@ module "test" {
 
   stream_view_type = "KEYS_ONLY"
 
+  kms_type = "AWS_MANAGED"
+
   # disabled as deployment takes very long
   # replica_region_names = ["eu-west-1"]
 

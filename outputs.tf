@@ -37,6 +37,7 @@ output "module_inputs" {
     ttl_enabled    = local.ttl_enabled
     table_tags     = local.table_tags
     stream_enabled = local.stream_enabled
+    kms_type       = local.kms_type
   }
 }
 
