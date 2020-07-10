@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2020-07-10
+### Added
+- Add `kms_type` argument to support specifying which key to use to encrypt data at rest.
+
 ## [0.1.1] - 2020-07-10
 ### Added
 - Add a test for minimal provider version to catch needed upgrades early
@@ -48,8 +52,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for Server Side Encryption (SSE)
 
 <!-- markdown-link-check-disable -->
-[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.1...HEAD
-[0.1.1]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.0...v0.1.1
+[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.1...v0.1.2
 <!-- markdown-link-check-disabled -->
+[0.1.1]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/mineiros-io/terraform-module-template/releases/tag/v0.0.1
