@@ -2,6 +2,7 @@ terraform {
   required_version = "~> 0.12.20"
 
   required_providers {
-    aws = "~> 2.0"
+    # replica support was added in 2.58
+    aws = "~> 2.58"
   }
 }
