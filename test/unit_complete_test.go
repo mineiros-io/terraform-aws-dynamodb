@@ -6,11 +6,11 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestCompleteUnit(t *testing.T) {
+func TestUnitComplete(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
-		TerraformDir: "complete-unit",
+		TerraformDir: "unit-complete",
 		Vars: map[string]interface{}{
 			"aws_region": "us-east-1",
 		},
