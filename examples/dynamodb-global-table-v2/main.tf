@@ -7,7 +7,7 @@
 
 module "terraform-aws-dynamodb" {
   source  = "mineiros-io/dynamodb/aws"
-  version = "~> 0.1.0"
+  version = "~> 0.1.1"
 
   name         = "global"
   hash_key     = "MyKey"
