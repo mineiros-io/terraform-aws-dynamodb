@@ -46,6 +46,12 @@ DOCKER_RUN_CMD  = docker run ${DOCKER_FLAGS} ${BUILD_TOOLS_DOCKER_IMAGE}
 .PHONY: default
 default: help
 
+# Not exposed as a callable target by `make help`, since this is a one-time shot to simplify the development of this module.
+.PHONY: template/adjust
+template/adjust: FILTER = -path ./.git -prune -a -type f -o -type f -not -name Makefile
+template/adjust:
+	@find . $(FILTER) -exec sed -i -e "s,terraform-module-template,$${PWD##*/},g" {} \;
+
 ## Run pre-commit hooks inside a build-tools docker container.
 .PHONY: test/pre-commit
 test/pre-commit: DOCKER_FLAGS += ${DOCKER_SSH_FLAGS}
@@ -65,8 +71,8 @@ test/unit-tests:
 clean:
 	$(call rm-command,.terraform)
 	$(call rm-command,*.tfplan)
-	$(call rm-command,examples/*/.terraform)
-	$(call rm-command,examples/*/*.tfplan)
+	$(call rm-command,*/*/.terraform)
+	$(call rm-command,*/*/*.tfplan)
 
 ## Display help for all targets
 .PHONY: help
