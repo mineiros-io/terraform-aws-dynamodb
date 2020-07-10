@@ -97,9 +97,15 @@ variable "table_tags" {
   default     = {}
 }
 
+variable "kms_type" {
+  type        = string
+  description = "(Optional) Specify which key to use for server side encryption: AWS owned CMK (AWS_OWNED), AWS managed CMK (AWS_MANAGED), or Customer managed CMK (CUSTOMER_MANAGED). If kms_key_arn is specified: the default is 'CUSTOMER_MANAGED' else the default is 'AWS_OWNED'."
+  default     = null
+}
+
 variable "kms_key_arn" {
   type        = string
-  description = "(Optional) The ARN of the CMK that should be used for the AWS KMS encryption. This attribute should only be specified if the key is different from the default DynamoDB CMK, alias/aws/dynamodb."
+  description = "(Optional) The ARN of the CMK that should be used for the AWS KMS encryption. This attribute should only be specified if kms_type is 'CUSTOMER_MANAGED' and the key is different from the default DynamoDB CMK, alias/aws/dynamodb."
   default     = null
 }
 

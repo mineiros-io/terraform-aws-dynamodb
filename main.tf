@@ -9,6 +9,26 @@ locals {
   table_tags     = merge(var.module_tags, var.table_tags)
 
   stream_enabled = var.stream_enabled == null && var.stream_view_type != null ? true : var.stream_enabled
+
+
+  kms_type_default = var.kms_key_arn != null ? "CUSTOMER_MANAGED" : "AWS_OWNED"
+
+  kms_type = var.kms_type != null ? var.kms_type : local.kms_type_default
+
+  sse_by_mode = {
+    "AWS_OWNED" = {
+      enabled = false
+    }
+    "AWS_MANAGED" = {
+      enabled = true
+    }
+    "CUSTOMER_MANAGED" = {
+      enabled     = true
+      kms_key_arn = var.kms_key_arn
+    }
+  }
+
+  sse = local.sse_by_mode[local.kms_type]
 }
 
 resource "aws_dynamodb_table" "table" {
@@ -29,8 +49,8 @@ resource "aws_dynamodb_table" "table" {
   tags = local.table_tags
 
   server_side_encryption {
-    enabled     = var.kms_key_arn != null ? true : false
-    kms_key_arn = var.kms_key_arn
+    enabled     = local.sse.enabled
+    kms_key_arn = try(local.sse.kms_key_arn, null)
   }
 
   dynamic "attribute" {

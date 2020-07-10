@@ -176,12 +176,29 @@ See [variables.tf] and [examples/] for details and use-cases.
   When an item in the table is modified, StreamViewType determines what information is written to the table's stream.
   Valid values are `KEYS_ONLY`, `NEW_IMAGE`, `OLD_IMAGE`, `NEW_AND_OLD_IMAGES`.
 
+- **`kms_type`**: *(Optional `string`)*
+
+  Can be one of `AWS_OWNED`, `AWS_MANAGED`, or `CUSTOMER_MANAGED`.
+
+  When creating a new table, you can choose one of the following customer master keys (CMK) to encrypt your table:
+
+  - AWS owned CMK – Default encryption type. The key is owned by DynamoDB (no additional charge).
+  - AWS managed CMK – The key is stored in your account and is managed by AWS KMS (AWS KMS charges apply).
+  - Customer managed CMK – The key is stored in your account and is created, owned, and managed by you. You have full control over the CMK (AWS KMS charges apply).
+
+  You can switch between the AWS owned CMK, AWS managed CMK, and customer managed CMK at any given time.
+
+  **Attention**: When using the AWS onwed CMK terraform will show `enabled = false` in the `server_side_encryption` block in the plan.
+
+  Default is `AWS_OWNED` when no `kms_key_arn` is sepcified, if `kms_key_arn` is set, the default is `CUSTOMER_MANAGED`.
+
 - **`kms_key_arn`**: *(Optional `string`)*
 
-  The ARN of the CMK that should be used for the AWS KMS encryption.
+  The ARN of the CMK that should be used for the AWS KMS encryption (`kms_type = "CUSTOMER_MANAGED"`).
+
   AWS DynamoDB tables are automatically encrypted at rest with an AWS owned Customer Master Key if this argument isn't specified.
-  This attribute should only be specified if the key is different from the default DynamoDB CMK, `alias/aws/dynamodb`.
-  Default is to use the AWS owned Master key `alias/aws/dynamodb`.
+  If you want to use the default DynamoDB CMK, `alias/aws/dynamodb` specify `kms_type = "AWS_OWNED"` and do not set the `kms_key_arn`.
+  Default is to use the AWS owned Master key (`kms_type = "AWS_OWNED"`).
 
 - **`local_secondary_indexes`**: *(Optional `list(local_secondary_index)`, Forces new resource)*
 
