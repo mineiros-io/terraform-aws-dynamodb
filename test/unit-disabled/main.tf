@@ -32,7 +32,7 @@ variable "attributes" {
 
 provider "aws" {
   region  = var.aws_region
-  version = "~> 2.58"
+  version = "~> 3.0"
 }
 
 module "test" {
