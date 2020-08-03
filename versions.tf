@@ -3,6 +3,6 @@ terraform {
 
   required_providers {
     # replica support was added in 2.58
-    aws = "~> 2.58"
+    aws = ">= 2.58, < 4.0"
   }
 }
