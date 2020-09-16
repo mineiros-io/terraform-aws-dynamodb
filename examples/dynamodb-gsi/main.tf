@@ -8,7 +8,7 @@
 
 module "terraform-aws-dynamodb" {
   source  = "mineiros-io/dynamodb/aws"
-  version = "~> 0.2.0"
+  version = "~> 0.3.0"
 
   name           = "GameScores"
   billing_mode   = "PROVISIONED"
@@ -48,8 +48,7 @@ module "terraform-aws-dynamodb" {
 # ----------------------------------------------------------------------------------------------------------------------
 
 provider "aws" {
-  version = "~> 3.0"
-  region  = "us-east-1"
+  region = "us-east-1"
 }
 
 # ----------------------------------------------------------------------------------------------------------------------

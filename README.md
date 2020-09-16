@@ -2,13 +2,16 @@
 
 [![Build Status][badge-build]][build-status]
 [![GitHub tag (latest SemVer)][badge-semver]][releases-github]
-[![license][badge-license]][apache20]
 [![Terraform Version][badge-terraform]][releases-terraform]
+[![AWS Provider Version][badge-tf-aws]][releases-aws-provider]
 [![Join Slack][badge-slack]][slack]
 
 # terraform-aws-dynamodb
 
 A [Terraform] base module for managing a DynamoDB Table [Amazon Web Services (AWS)][AWS].
+
+***This module supports Terraform v0.13 as well as v0.12.20 and above
+and is compatible with the terraform AWS provider v3 as well as v2.58 and above.***
 
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
@@ -57,7 +60,7 @@ Most basic usage just setting required arguments:
 ```hcl
 module "terraform-aws-dynamodb" {
   source  = "mineiros-io/dynamodb/aws"
-  version = "~> 0.2.0"
+  version = "~> 0.3.0"
 
   name     = "MyTable"
   hash_key = "HashKey"
@@ -234,6 +237,17 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
 
+    This is broken in AWS provider releases 3.5.0 and 3.6.0. Ensure to remove them from the list of available versions if you are using it.
+    ```
+    terraform {
+      required_providers {
+        # replica support was added in 2.58
+        # 3.5.0 to 3.6.0 is broken due to https://github.com/terraform-providers/terraform-provider-aws/issues/15115
+        aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0"
+      }
+    }
+    ```
+
 - **`global_secondary_indexes`**: *(Optional `list(global_secondary_index)`)*
 
   Describe a GSI for the table; subject to the normal limits on the number of GSIs, projected attributes, etc.
@@ -269,6 +283,17 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
     Default is `[]`.
+
+    This is broken in AWS provider releases 3.5.0 and 3.6.0. Ensure to remove them from the list of available versions if you are using it.
+    ```
+    terraform {
+      required_providers {
+        # replica support was added in 2.58
+        # 3.5.0 to 3.6.0 is broken due to https://github.com/terraform-providers/terraform-provider-aws/issues/15115
+        aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0"
+      }
+    }
+    ```
 
 - **`table_tags`**: *(Optional `map(string)`)*
 
@@ -347,6 +372,8 @@ Run `make help` to see details on each available target.
 
 ## License
 
+[![license][badge-license]][apache20]
+
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
@@ -367,6 +394,9 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [build-status]: https://github.com/mineiros-io/terraform-aws-dynamodb/actions
 [releases-github]: https://github.com/mineiros-io/terraform-aws-dynamodb/releases
 <!-- markdown-link-check-enable -->
+
+[badge-tf-aws]: https://img.shields.io/badge/AWS-3%20and%202.58+-F8991D.svg?logo=terraform
+[releases-aws-provider]: https://github.com/terraform-providers/terraform-provider-aws/releases
 
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
