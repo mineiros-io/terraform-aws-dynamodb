@@ -6,9 +6,20 @@
 # OUTPUT ALL RESOURCES AS FULL OBJECTS
 # ------------------------------------------------------------------------------
 
+# fix tf13 output diff
+locals {
+  table = try(aws_dynamodb_table.table[0], {})
+
+  o_table_tags = try(local.table.tags, {})
+
+  o_table = var.module_enabled ? merge(local.table, {
+    tags = local.o_table_tags != null ? local.table.tags : {}
+  }) : null
+}
+
 output "table" {
   description = "The dynamodb_table object."
-  value       = try(aws_dynamodb_table.table[0], null)
+  value       = local.o_table
 }
 
 # ------------------------------------------------------------------------------

@@ -104,8 +104,8 @@ resource "aws_dynamodb_table" "table" {
       hash_key        = index.value.hash_key
       projection_type = index.value.projection_type
 
-      write_capacity = var.billing_mode == "PROVISIONED" ? try(index.value.write_capacity, null) : null
-      read_capacity  = var.billing_mode == "PROVISIONED" ? try(index.value.read_capacity, null) : null
+      write_capacity = var.billing_mode == "PROVISIONED" ? try(index.value.write_capacity, null) : 0
+      read_capacity  = var.billing_mode == "PROVISIONED" ? try(index.value.read_capacity, null) : 0
 
       range_key          = try(index.value.range_key, null)
       non_key_attributes = try(index.value.non_key_attributes, null)
