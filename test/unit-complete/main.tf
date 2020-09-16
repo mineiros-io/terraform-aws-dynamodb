@@ -20,8 +20,7 @@ terraform {
 
 
 provider "aws" {
-  region  = var.aws_region
-  version = "~> 3.0"
+  region = var.aws_region
 }
 
 module "test" {

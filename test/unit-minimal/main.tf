@@ -10,9 +10,14 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+terraform {
+  required_providers {
+    aws = "2.58"
+  }
+}
+
 provider "aws" {
-  region  = var.aws_region
-  version = "2.58"
+  region = var.aws_region
 }
 
 module "test" {
