@@ -15,7 +15,7 @@ The code in [main.tf] defines the following module configuration:
 ```hcl
 module "terraform-aws-dynamodb" {
   source  = "mineiros-io/dynamodb/aws"
-  version = "~> 0.2.0"
+  version = "~> 0.3.0"
 
   name         = "example"
   hash_key     = "TestTableHashKey"
