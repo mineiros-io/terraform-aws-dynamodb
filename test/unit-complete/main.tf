@@ -14,7 +14,7 @@ terraform {
   required_providers {
     # replica support was added in 2.58
     # 3.5.0 to 3.6.0 is broken due to https://github.com/terraform-providers/terraform-provider-aws/issues/15115
-    aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0"
+    aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0, != 3.7.0"
   }
 }
 
