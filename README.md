@@ -237,13 +237,15 @@ See [variables.tf] and [examples/] for details and use-cases.
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
 
-    This is broken in AWS provider releases 3.5.0 and 3.6.0. Ensure to remove them from the list of available versions if you are using it.
+    This is broken in AWS provider releases 3.5.0 to 3.7.0. Ensure to remove them from the list of available versions if you are using it.
+    It was again fixed in version 3.8.0.
+
     ```
     terraform {
       required_providers {
         # replica support was added in 2.58
-        # 3.5.0 to 3.6.0 is broken due to https://github.com/terraform-providers/terraform-provider-aws/issues/15115
-        aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0"
+        # 3.5.0 to 3.7.0 is broken due to https://github.com/terraform-providers/terraform-provider-aws/issues/15115
+        aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0, != 3.7.0"
       }
     }
     ```
@@ -284,13 +286,15 @@ See [variables.tf] and [examples/] for details and use-cases.
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
     Default is `[]`.
 
-    This is broken in AWS provider releases 3.5.0 and 3.6.0. Ensure to remove them from the list of available versions if you are using it.
+    This is broken in AWS provider releases 3.5.0 to 3.7.0. Ensure to remove them from the list of available versions if you are using it.
+    It was again fixed in version 3.8.0.
+
     ```
     terraform {
       required_providers {
         # replica support was added in 2.58
-        # 3.5.0 to 3.6.0 is broken due to https://github.com/terraform-providers/terraform-provider-aws/issues/15115
-        aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0"
+        # 3.5.0 to 3.7.0 is broken due to https://github.com/terraform-providers/terraform-provider-aws/issues/15115
+        aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0, != 3.7.0"
       }
     }
     ```
