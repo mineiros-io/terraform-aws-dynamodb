@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0]
+### Changed
+- BREAKING: Enable point-in-time recovery by default. Set `point_in_time_recovery_enabled = false` if desired.
+
 ## [0.3.0]
 ### Changed
 - Add support for Terraform v0.13
@@ -62,9 +66,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for Server Side Encryption (SSE)
 
 <!-- markdown-link-check-disable -->
-[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.3.0...HEAD
-[0.3.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.2.0...v0.3.0
+[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.3.0...v0.4.0
 <!-- markdown-link-check-disabled -->
+[0.3.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.0...v0.1.1
