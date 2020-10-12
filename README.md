@@ -60,7 +60,7 @@ Most basic usage just setting required arguments:
 ```hcl
 module "terraform-aws-dynamodb" {
   source  = "mineiros-io/dynamodb/aws"
-  version = "~> 0.3.0"
+  version = "~> 0.4.0"
 
   name     = "MyTable"
   hash_key = "HashKey"
@@ -158,7 +158,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 - **`point_in_time_recovery_enabled`**: *(Optional `bool`)*
 
   Whether to enable point-in-time recovery - note that it can take up to 10 minutes to enable for new tables.
-  Default is `false`.
+  Default is `true`.
 
 - **`replica_region_names`**: *(Optional `set(string)`)*
 

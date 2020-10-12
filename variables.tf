@@ -52,7 +52,7 @@ variable "ttl_attribute_name" {
 variable "point_in_time_recovery_enabled" {
   type        = bool
   description = "Whether to enable point-in-time recovery - note that it can take up to 10 minutes to enable for new tables."
-  default     = false
+  default     = true
 }
 
 variable "stream_enabled" {
