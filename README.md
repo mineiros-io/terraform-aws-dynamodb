@@ -158,7 +158,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 - **`point_in_time_recovery_enabled`**: *(Optional `bool`)*
 
   Whether to enable point-in-time recovery - note that it can take up to 10 minutes to enable for new tables.
-  Default is `false`.
+  Default is `true`.
 
 - **`replica_region_names`**: *(Optional `set(string)`)*
 
