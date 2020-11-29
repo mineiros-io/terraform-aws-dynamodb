@@ -324,6 +324,12 @@ The following attributes are exported by the module:
 
   The full `aws_dynamodb_table` object with all its attributes.
 
+- **`computed_arn`**
+
+  Computed table arn in the format: `arn:aws:dynamodb:<region>:<account_id>:table/<name>`.
+  This value can be used to create predictable policies in cases where terraform depends on the ARN of the table that will be created in the plan phase but can only access the ARN of the table after applying it.
+
+
 ## External Documentation
 
 - AWS Documentation IAM:
