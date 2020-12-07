@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.2]
+### Added
+- fix: local.table is object with no attributes on destroy
+
 ## [0.4.1]
 ### Added
 - feat: Add `computed_arn` output.
@@ -70,9 +74,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for Server Side Encryption (SSE)
 
 <!-- markdown-link-check-disable -->
-[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.1...HEAD
-[0.4.1]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.0...v0.4.1
+[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.1...v0.4.2
 <!-- markdown-link-check-disabled -->
+[0.4.1]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.1.2...v0.2.0
