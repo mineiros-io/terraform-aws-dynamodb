@@ -13,7 +13,7 @@ locals {
   o_table_tags = try(local.table.tags, {})
 
   o_table = var.module_enabled ? merge(local.table, {
-    tags = local.o_table_tags != null ? local.table.tags : {}
+    tags = local.o_table_tags != null ? local.o_table_tags : {}
   }) : null
 }
 
