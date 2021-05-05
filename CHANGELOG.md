@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - build: update secrets in github actions pipeline
 - feat: updates aws provider version in minimal test scenario
 - feat: upgrade terratest to v0.34.0
+- build: upgrade pre-commit-hooks to v0.2.2
 
 ## [0.4.2]
 ### Added
