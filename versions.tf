@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 0.12.20, < 0.14"
+  required_version = ">= 0.12.20, < 0.15"
 
   required_providers {
     # replica support was added in 2.58
