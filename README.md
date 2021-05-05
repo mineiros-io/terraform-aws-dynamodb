@@ -10,8 +10,8 @@
 
 A [Terraform] base module for managing a DynamoDB Table [Amazon Web Services (AWS)][AWS].
 
-***This module supports Terraform v0.13 as well as v0.12.20 and above
-and is compatible with the terraform AWS provider v3 as well as v2.58 and above.***
+***This module supports Terraform v0.14 as well as v0.12.20 and above
+and is compatible with the Terraform AWS provider v3 as well as v2.58 and above.***
 
 This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,

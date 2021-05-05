@@ -12,7 +12,7 @@ variable "aws_region" {
 
 terraform {
   required_providers {
-    aws = "2.58"
+    aws = ">= 2.58, < 4.0, != 3.5.0, != 3.6.0, != 3.7.0"
   }
 }
 
