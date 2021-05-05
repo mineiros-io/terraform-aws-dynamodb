@@ -57,9 +57,7 @@ Run `terraform destroy` to destroy all resources again.
 
 <!-- References -->
 
-<!-- markdown-link-check-disable -->
 [main.tf]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/dynamodb-streams/main.tf
-<!-- markdown-link-check-enable -->
 
 [homepage]: https://mineiros.io/?ref=terraform-aws-dynamodb
 

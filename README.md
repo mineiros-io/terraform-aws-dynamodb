@@ -387,7 +387,7 @@ Run `make help` to see details on each available target.
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
-Copyright &copy; 2020 [Mineiros GmbH][homepage]
+Copyright &copy; 2021 [Mineiros GmbH][homepage]
 
 <!-- References -->
 
@@ -400,10 +400,8 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [badge-terraform]: https://img.shields.io/badge/terraform-0.13%20and%200.12.20+-623CE4.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 
-<!-- markdown-link-check-disable -->
 [build-status]: https://github.com/mineiros-io/terraform-aws-dynamodb/actions
 [releases-github]: https://github.com/mineiros-io/terraform-aws-dynamodb/releases
-<!-- markdown-link-check-enable -->
 
 [badge-tf-aws]: https://img.shields.io/badge/AWS-3%20and%202.58+-F8991D.svg?logo=terraform
 [releases-aws-provider]: https://github.com/terraform-providers/terraform-provider-aws/releases
@@ -415,7 +413,6 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [AWS]: https://aws.amazon.com/
 [Semantic Versioning (SemVer)]: https://semver.org/
 
-<!-- markdown-link-check-disable -->
 [variables.tf]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/variables.tf
 [examples/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples
 [Issues]: https://github.com/mineiros-io/terraform-aws-dynamodb/issues
@@ -423,4 +420,3 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [Makefile]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/Makefile
 [Pull Requests]: https://github.com/mineiros-io/terraform-aws-dynamodb/pulls
 [Contribution Guidelines]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/CONTRIBUTING.md
-<!-- markdown-link-check-enable -->

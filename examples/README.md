@@ -12,11 +12,9 @@
 - [dynamodb-streams/] Create a DynamoDB Table and a DynamoDB Streams configuration.
 
 <!-- References -->
-<!-- markdown-link-check-disable -->
 [dynamodb-global-table-v2/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/dynamodb-global-table-v2
 [dynamodb-gsi/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/dynamodb-gsi
 [dynamodb-streams/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples/dynamodb-streams
-<!-- markdown-link-check-enable -->
 
 [homepage]: https://mineiros.io/?ref=terraform-aws-dynamodb
 
@@ -25,9 +23,7 @@
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-dynamodb.svg?label=latest&sort=semver
 
-<!-- markdown-link-check-disable -->
 [releases-github]: https://github.com/mineiros-io/terraform-aws-dynamodb/releases
-<!-- markdown-link-check-enable -->
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
 [slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
