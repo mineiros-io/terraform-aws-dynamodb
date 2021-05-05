@@ -8,10 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.3]
 ### Added
-- feat: add support for terraform v0.14.x
+- feat: add support for terraform `v0.14.x`
 
 ### Changed
-- build: upgrade build-tools to v0.8.0
+- build: upgrade build-tools to `v0.9.0`
+- build: update secrets in github actions pipeline
+- feat: updates aws provider version in minimal test scenario
 - feat: upgrade terratest to v0.34.0
 
 ## [0.4.2]

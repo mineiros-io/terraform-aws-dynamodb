@@ -5,13 +5,13 @@ BUILD_TOOLS_VERSION      ?= v0.9.0
 BUILD_TOOLS_DOCKER_REPO  ?= mineiros/build-tools
 BUILD_TOOLS_DOCKER_IMAGE ?= ${BUILD_TOOLS_DOCKER_REPO}:${BUILD_TOOLS_VERSION}
 
-# if running in CI (e.g. GitHub Actions)
+# If running in CI (e.g. GitHub Actions)
 # https://docs.github.com/en/actions/reference/environment-variables#default-environment-variables
 #
-# to disable TF_IN_AUTOMATION in CI set it to empty
+# To disable TF_IN_AUTOMATION in CI set it to empty
 # https://www.terraform.io/docs/commands/environment-variables.html#tf_in_automation
 #
-# we are using GNU style quiet commands to disable set V to non-empty e.g. V=1
+# We are using GNU style quiet commands to disable set V to non-empty e.g. V=1
 # https://www.gnu.org/software/automake/manual/html_node/Debugging-Make-Rules.html
 #
 ifdef CI
