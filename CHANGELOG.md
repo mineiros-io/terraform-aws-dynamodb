@@ -5,17 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### Added
-- feat: add support for terraform `v0.14`
-### Changed
-- build: upgrade build-tools to `v0.7.2`
 
-## [0.4.3]
+## [0.5.0]
 ### Added
+- feat: add support for terraform `v0.15.x`
 - feat: add support for terraform `v0.14.x`
-
 ### Changed
-- build: upgrade build-tools to `v0.9.0`
+- refactor: refactor build-tools to use named volumes for go and terraform files
+- build: upgrade build-tools to `v0.11.0`
 - build: update secrets in github actions pipeline
 - feat: updates aws provider version in minimal test scenario
 - feat: upgrade terratest to v0.34.0
@@ -89,8 +86,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for Server Side Encryption (SSE)
 
 <!-- markdown-link-check-disable -->
-[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.2...HEAD
-[0.4.2]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.1...v0.4.2
+[Unreleased]: https://github.com/mineiros-io/terraform-module-template/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.1...v0.5.0
 <!-- markdown-link-check-disabled -->
 [0.4.1]: https://github.com/mineiros-io/terraform-module-template/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/mineiros-io/terraform-module-template/compare/v0.3.0...v0.4.0
