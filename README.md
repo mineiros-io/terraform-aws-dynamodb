@@ -60,7 +60,7 @@ Most basic usage just setting required arguments:
 ```hcl
 module "terraform-aws-dynamodb" {
   source  = "mineiros-io/dynamodb/aws"
-  version = "~> 0.4.0"
+  version = "~> 0.5.0"
 
   name     = "MyTable"
   hash_key = "HashKey"
@@ -397,7 +397,7 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [badge-build]: https://github.com/mineiros-io/terraform-aws-dynamodb/workflows/CI/CD%20Pipeline/badge.svg
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-dynamodb.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[badge-terraform]: https://img.shields.io/badge/Terraform-0.15%20and%200.12.20+-623CE4.svg?logo=terraform
+[badge-terraform]: https://img.shields.io/badge/terraform-0.15%20|0.14%20|%200.13%20|%200.12.20+-623CE4.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 
 <!-- markdown-link-check-disable -->
