@@ -1,7 +1,7 @@
 # Set default shell to bash
 SHELL := /bin/bash -o pipefail
 
-BUILD_TOOLS_VERSION      ?= v0.7.2
+BUILD_TOOLS_VERSION      ?= v0.11.0
 BUILD_TOOLS_DOCKER_REPO  ?= mineiros/build-tools
 BUILD_TOOLS_DOCKER_IMAGE ?= ${BUILD_TOOLS_DOCKER_REPO}:${BUILD_TOOLS_VERSION}
 
@@ -28,10 +28,15 @@ ifndef NOCOLOR
 	RESET  := $(shell tput -Txterm sgr0)
 endif
 
+# We are creating docker volumes for /go and /terraform that are unique per
+# repository to reuse dependencies between different docker run commands.
+VOLUME_PREFIX ?= mineiros_build_tools
+VOLUME_SUFFIX ?= $(notdir $(shell git rev-parse --show-toplevel || "build"))
+DOCKER_RUN_FLAGS += -v ${VOLUME_PREFIX}-terraform-${VOLUME_SUFFIX}:/terraform
+DOCKER_RUN_FLAGS += -v ${VOLUME_PREFIX}-go-${VOLUME_SUFFIX}:/go
+DOCKER_RUN_FLAGS += -v ${PWD}:/build
 DOCKER_RUN_FLAGS += --rm
-DOCKER_RUN_FLAGS += -v ${PWD}:/app/src
 DOCKER_RUN_FLAGS += -e TF_IN_AUTOMATION
-DOCKER_RUN_FLAGS += -e USER_UID=$(shell id -u)
 
 DOCKER_SSH_FLAGS += -e SSH_AUTH_SOCK=/ssh-agent
 DOCKER_SSH_FLAGS += -v ${SSH_AUTH_SOCK}:/ssh-agent
