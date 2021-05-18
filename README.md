@@ -10,7 +10,7 @@
 
 A [Terraform] base module for managing a DynamoDB Table [Amazon Web Services (AWS)][AWS].
 
-***This module supports Terraform v0.13 as well as v0.12.20 and above
+***This module supports Terraform v0.14, v0.13 as well as v0.12.20 and above
 and is compatible with the terraform AWS provider v3 as well as v2.58 and above.***
 
 This module is part of our Infrastructure as Code (IaC) framework
@@ -397,7 +397,7 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [badge-build]: https://github.com/mineiros-io/terraform-aws-dynamodb/workflows/CI/CD%20Pipeline/badge.svg
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-dynamodb.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[badge-terraform]: https://img.shields.io/badge/terraform-0.13%20and%200.12.20+-623CE4.svg?logo=terraform
+[badge-terraform]: https://img.shields.io/badge/terraform-0.14%20and%200.12.20+-623CE4.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 
 <!-- markdown-link-check-disable -->
