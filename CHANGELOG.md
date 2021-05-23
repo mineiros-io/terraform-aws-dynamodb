@@ -11,33 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- feat: add support for terraform `v0.15.x`
-- feat: add support for terraform `v0.14.x`
-
-### Changed
-
-- refactor: refactor build-tools to use named volumes for go and terraform files
-- build: upgrade build-tools to `v0.11.0`
-- build: update secrets in github actions pipeline
-- feat: updates aws provider version in minimal test scenario
-- feat: upgrade terratest to v0.34.0
-- build: upgrade pre-commit-hooks to v0.2.2
+- Add support for terraform `v0.15`
+- Add support for terraform `v0.14`
+## [0.4.2]
 
 ### Fixed
 
-- fix: remove ssh agent forwarding in Makefile
-
-## [0.4.2]
-
-### Added
-
-- fix: local.table is object with no attributes on destroy
+- Fix `local.table is object with no attributes on destroy`
 
 ## [0.4.1]
 
 ### Added
 
-- feat: Add `computed_arn` output.
+- Add `computed_arn` output
 
 ## [0.4.0]
 
