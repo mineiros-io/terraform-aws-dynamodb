@@ -77,8 +77,3 @@ module "test" {
     Environment = "unknown"
   }
 }
-
-output "all" {
-  description = "All outputs of the module."
-  value       = module.test
-}
