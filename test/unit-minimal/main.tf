@@ -29,8 +29,3 @@ module "test" {
     key = "S"
   }
 }
-
-output "all" {
-  description = "All outputs of the module."
-  value       = module.test
-}
