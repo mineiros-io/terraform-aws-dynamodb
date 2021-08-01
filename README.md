@@ -10,7 +10,7 @@
 
 A [Terraform] base module for managing a DynamoDB Table [Amazon Web Services (AWS)][AWS].
 
-***This module supports Terraform v0.15, v0.14, v0.13 as well as v0.12.20 and above
+***This module supports Terraform v1.x, v0.15, v0.14, v0.13 as well as v0.12.20 and above
 and is compatible with the Terraform AWS provider v3 as well as v2.58 and above.***
 
 This module is part of our Infrastructure as Code (IaC) framework
@@ -60,7 +60,7 @@ Most basic usage just setting required arguments:
 ```hcl
 module "terraform-aws-dynamodb" {
   source  = "mineiros-io/dynamodb/aws"
-  version = "~> 0.5.0"
+  version = "~> 0.6.0"
 
   name     = "MyTable"
   hash_key = "HashKey"
@@ -397,7 +397,7 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [badge-build]: https://github.com/mineiros-io/terraform-aws-dynamodb/workflows/CI/CD%20Pipeline/badge.svg
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-dynamodb.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
-[badge-terraform]: https://img.shields.io/badge/terraform-0.15%20|0.14%20|%200.13%20|%200.12.20+-623CE4.svg?logo=terraform
+[badge-terraform]: https://img.shields.io/badge/terraform-1.x%20|%200.15%20|%200.14%20|%200.13%20|%200.12.20+-623CE4.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
 
 <!-- markdown-link-check-disable -->
