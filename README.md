@@ -1,10 +1,10 @@
-[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>][homepage]
+[<img src="https://raw.githubusercontent.com/mineiros-io/brand/3bffd30e8bdbbde32c143e2650b2faa55f1df3ea/mineiros-primary-logo.svg" width="400"/>](https://mineiros.io/?ref=terraform-aws-dynamodb)
 
-[![Build Status][badge-build]][build-status]
-[![GitHub tag (latest SemVer)][badge-semver]][releases-github]
-[![Terraform Version][badge-terraform]][releases-terraform]
-[![AWS Provider Version][badge-tf-aws]][releases-aws-provider]
-[![Join Slack][badge-slack]][slack]
+[![Build Status](https://github.com/mineiros-io/terraform-aws-dynamodb/workflows/CI/CD%20Pipeline/badge.svg)](https://github.com/mineiros-io/terraform-aws-dynamodb/actions)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-dynamodb.svg?label=latest&sort=semver)](https://github.com/mineiros-io/terraform-aws-dynamodb/releases)
+[![Terraform Version](https://img.shields.io/badge/terraform-1.x%20|%200.15%20|%200.14%20|%200.13%20|%200.12.20+-623CE4.svg?logo=terraform)](https://github.com/hashicorp/terraform/releases)
+[![AWS Provider Version](https://img.shields.io/badge/AWS-3%20and%202.58+-F8991D.svg?logo=terraform)](https://github.com/terraform-providers/terraform-provider-aws/releases)
+[![Join Slack](https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack)](https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg)
 
 # terraform-aws-dynamodb
 
@@ -17,14 +17,17 @@ This module is part of our Infrastructure as Code (IaC) framework
 that enables our users and customers to easily deploy and manage reusable,
 secure, and production-grade cloud infrastructure.
 
+
 - [Module Features](#module-features)
 - [Getting Started](#getting-started)
 - [Module Argument Reference](#module-argument-reference)
   - [Top-level Arguments](#top-level-arguments)
     - [Module Configuration](#module-configuration)
     - [Main Resource Configuration](#main-resource-configuration)
-- [Module Attributes Reference](#module-attributes-reference)
+- [Module Outputs](#module-outputs)
 - [External Documentation](#external-documentation)
+  - [AWS Documentation](#aws-documentation)
+  - [Terraform AWS Provider Documentation](#terraform-aws-provider-documentation)
 - [Module Versioning](#module-versioning)
   - [Backwards compatibility in `0.0.z` and `0.y.z` version](#backwards-compatibility-in-00z-and-0yz-version)
 - [About Mineiros](#about-mineiros)
@@ -79,136 +82,157 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 #### Module Configuration
 
-- **`module_enabled`**: *(Optional `bool`)*
+- [**`module_enabled`**](#var-module_enabled): *(Optional `bool`)*<a name="var-module_enabled"></a>
 
   Specifies whether resources in the module will be created.
+
   Default is `true`.
 
-- **`module_tags`**: *(Optional `map(string)`)*
+- [**`module_tags`**](#var-module_tags): *(Optional `map(string)`)*<a name="var-module_tags"></a>
 
-  A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be
-  overwritten by resource-specific tags.
+  A map of tags that will be applied to all created resources that accept tags. Tags defined with 'module_tags' can be overwritten by resource-specific tags.
+
   Default is `{}`.
 
-- **`module_depends_on`**: *(Optional `list(dependencies)`)*
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependencies)`)*<a name="var-module_depends_on"></a>
 
   A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
 
 #### Main Resource Configuration
 
-- **`name`**: **(Required `string`)**
+- [**`name`**](#var-name): *(**Required** `string`)*<a name="var-name"></a>
 
   The name of the table, this needs to be unique within a region.
 
-- **`hash_key`**: **(Required `string`, Forces new resource)**
+- [**`hash_key`**](#var-hash_key): *(**Required** `string`)*<a name="var-hash_key"></a>
 
-  The attribute to use as the hash (partition) key. Must also be defined as an attribute, see below.
+  The attribute to use as the hash (partition) key. Must also be defined as an attribute, see below. Forces new resource.
 
-- **`billing_mode`**: *(Optional `string`)*
+- [**`billing_mode`**](#var-billing_mode): *(Optional `string`)*<a name="var-billing_mode"></a>
 
   Controls how you are charged for read and write throughput and how you manage capacity.
-  The valid values are `PROVISIONED` and `PAY_PER_REQUEST`.
-  Defaults is `"PROVISIONED"`.
+The valid values are `PROVISIONED` and `PAY_PER_REQUEST`.
 
-- **`range_key`**: *(Optional, Forces new resource)*
+  Default is `"PROVISIONED"`.
 
-  The attribute to use as the range (sort) key. Must also be defined as an attribute, see below.
+- [**`range_key`**](#var-range_key): *(Optional `string`)*<a name="var-range_key"></a>
 
-- **`write_capacity`**: *(Optional `number`)*
+  The attribute to use as the range (sort) key. Must also be defined as an attribute, see below. Forces new resource.
+
+- [**`write_capacity`**](#var-write_capacity): *(Optional `number`)*<a name="var-write_capacity"></a>
 
   The number of write units for this table. If the billing_mode is PROVISIONED, this field is required.
 
-- **`read_capacity`**: *(Optional `number`)*
+  Default is `5`.
+
+- [**`read_capacity`**](#var-read_capacity): *(Optional `number`)*<a name="var-read_capacity"></a>
 
   The number of read units for this table. If the billing_mode is PROVISIONED, this field is required.
 
-- **`attributes`**: **(Required `map(string)`)**
+  Default is `5`.
 
-  Map of attribute definitions. Only required for `hash_key` and `range_key` attributes.
-  The map key is the attribute name.
-  The map value is the type of the attribute, which must be a scalar type: S, N, or B for (S)tring, (N)umber or (B)inary data.
+- [**`attributes`**](#var-attributes): *(**Required** `map(string)`)*<a name="var-attributes"></a>
 
-  ```
-  hask_key = "LockID"
+  List of nested attribute definitions. Only required for hash_key and range_key attributes.
 
-  attributes = {
-    LockID = "S"
-  }
-  ```
+```
+hash_key = "LockID"
 
-  **A note about attributes**
+attributes = {
+  LockID = "S"
+}
+```
 
-  Only define attributes on the table object that are going to be used as:
+**A note about attributes**
 
-  - Table hash key or range key
-  - LSI or GSI hash key or range key
+Only define attributes on the table object that are going to be used as:
 
-  The DynamoDB API expects attribute structure (name and type) to be passed along when creating or updating GSI/LSIs or creating the initial table. In these cases it expects the Hash / Range keys to be provided; because these get re-used in numerous places (i.e the table's range key could be a part of one or more GSIs), they are stored on the table object to prevent duplication and increase consistency. If you add attributes here that are not used in these scenarios it can cause an infinite loop in planning.
+- Table hash key or range key
+- LSI or GSI hash key or range key
 
-- **`ttl_attribute_name`**: *(Optional `string`)*
+The DynamoDB API expects attribute structure (name and type) to be passed along when creating or updating GSI/LSIs or creating the initial table. In these cases it expects the Hash / Range keys to be provided; because these get re-used in numerous places (i.e the table's range key could be a part of one or more GSIs), they are stored on the table object to prevent duplication and increase consistency. If you add attributes here that are not used in these scenarios it can cause an infinite loop in planning.
+
+  Each object in the map accepts the following attributes:
+
+  - [**`name`**](#attr-name-attributes): *(**Required** `string`)*<a name="attr-name-attributes"></a>
+
+    The name of the attribute
+
+  - [**`type`**](#attr-type-attributes): *(**Required** `string`)*<a name="attr-type-attributes"></a>
+
+    Attribute type, which must be a scalar type: S, N, or B for (S)tring, (N)umber or (B)inary data
+
+- [**`ttl_attribute_name`**](#var-ttl_attribute_name): *(Optional `string`)*<a name="var-ttl_attribute_name"></a>
 
   The name of the table attribute to store the TTL timestamp in.
-  Default is not to store TTL timestamp.
+Default is not to store TTL timestamp.
 
-- **`ttl_enabled`**: *(Optional `bool`)*
+- [**`ttl_enabled`**](#var-ttl_enabled): *(Optional `bool`)*<a name="var-ttl_enabled"></a>
 
-  Indicates whether ttl is enabled (`true`) or disabled (`false`).
-  Default is `true` when `ttl_attribute_name` is set.
+  Indicates whether ttl is enabled (`true`) or disabled (`false`). Default applies when `ttl_attribute_name` is set.
 
-- **`point_in_time_recovery_enabled`**: *(Optional `bool`)*
-
-  Whether to enable point-in-time recovery - note that it can take up to 10 minutes to enable for new tables.
   Default is `true`.
 
-- **`replica_region_names`**: *(Optional `set(string)`)*
+- [**`point_in_time_recovery_enabled`**](#var-point_in_time_recovery_enabled): *(Optional `bool`)*<a name="var-point_in_time_recovery_enabled"></a>
+
+  Whether to enable point-in-time recovery - note that it can take up to 10 minutes to enable for new tables.
+
+  Default is `true`.
+
+- [**`replica_region_names`**](#var-replica_region_names): *(Optional `set(string)`)*<a name="var-replica_region_names"></a>
 
   A set of region names to configure DynamoDB Global Tables V2 (version 2019.11.21) replication configurations.
+
   Default is `[]`.
 
-  ```
+  Example:
+
+  ```hcl
   replica_region_names = ["eu-west-1", "us-east-1"]
   ```
 
-- **`stream_enabled`**: *(Optional `bool`)*
+- [**`stream_enabled`**](#var-stream_enabled): *(Optional `bool`)*<a name="var-stream_enabled"></a>
 
   Indicates whether Streams are to be enabled (`true`) or disabled (`false`).
-  Default is `false`.
 
-- **`stream_view_type`**: *(Optional `string`)*
+- [**`stream_view_type`**](#var-stream_view_type): *(Optional `string`)*<a name="var-stream_view_type"></a>
 
   When an item in the table is modified, StreamViewType determines what information is written to the table's stream.
-  Valid values are `KEYS_ONLY`, `NEW_IMAGE`, `OLD_IMAGE`, `NEW_AND_OLD_IMAGES`.
+Valid values are `KEYS_ONLY`, `NEW_IMAGE`, `OLD_IMAGE`, `NEW_AND_OLD_IMAGES`.
 
-- **`kms_type`**: *(Optional `string`)*
+- [**`kms_type`**](#var-kms_type): *(Optional `string`)*<a name="var-kms_type"></a>
 
   Can be one of `AWS_OWNED`, `AWS_MANAGED`, or `CUSTOMER_MANAGED`.
 
-  When creating a new table, you can choose one of the following customer master keys (CMK) to encrypt your table:
+When creating a new table, you can choose one of the following customer master keys (CMK) to encrypt your table:
 
-  - AWS owned CMK – Default encryption type. The key is owned by DynamoDB (no additional charge).
-  - AWS managed CMK – The key is stored in your account and is managed by AWS KMS (AWS KMS charges apply).
-  - Customer managed CMK – The key is stored in your account and is created, owned, and managed by you. You have full control over the CMK (AWS KMS charges apply).
+- AWS owned CMK - Default encryption type. The key is owned by DynamoDB (no additional charge).
+- AWS managed CMK - The key is stored in your account and is managed by AWS KMS (AWS KMS charges apply).
+- Customer managed CMK - The key is stored in your account and is created, owned, and managed by you. You have full control over the CMK (AWS KMS charges apply).
 
-  You can switch between the AWS owned CMK, AWS managed CMK, and customer managed CMK at any given time.
+You can switch between the AWS owned CMK, AWS managed CMK, and customer managed CMK at any given time.
 
-  **Attention**: When using the AWS onwed CMK terraform will show `enabled = false` in the `server_side_encryption` block in the plan.
+**Attention**: When using the AWS onwed CMK terraform will show `enabled = false` in the `server_side_encryption` block in the plan.
 
-  Default is `AWS_OWNED` when no `kms_key_arn` is sepcified, if `kms_key_arn` is set, the default is `CUSTOMER_MANAGED`.
+Default is `AWS_OWNED` when no `kms_key_arn` is specified, if `kms_key_arn` is set, the default is `CUSTOMER_MANAGED`.
 
-- **`kms_key_arn`**: *(Optional `string`)*
+- [**`kms_key_arn`**](#var-kms_key_arn): *(Optional `string`)*<a name="var-kms_key_arn"></a>
 
   The ARN of the CMK that should be used for the AWS KMS encryption (`kms_type = "CUSTOMER_MANAGED"`).
 
-  AWS DynamoDB tables are automatically encrypted at rest with an AWS owned Customer Master Key if this argument isn't specified.
-  If you want to use the default DynamoDB CMK, `alias/aws/dynamodb` specify `kms_type = "AWS_OWNED"` and do not set the `kms_key_arn`.
-  Default is to use the AWS owned Master key (`kms_type = "AWS_OWNED"`).
+AWS DynamoDB tables are automatically encrypted at rest with an AWS owned Customer Master Key if this argument isn't specified.
+If you want to use the default DynamoDB CMK, `alias/aws/dynamodb` specify `kms_type = "AWS_OWNED"` and do not set the `kms_key_arn`.
+Default is to use the AWS owned Master key (`kms_type = "AWS_OWNED"`).
 
-- **`local_secondary_indexes`**: *(Optional `list(local_secondary_index)`, Forces new resource)*
+- [**`local_secondary_indexes`**](#var-local_secondary_indexes): *(Optional `list(local_secondary_index)`)*<a name="var-local_secondary_indexes"></a>
 
-  Describe an LSI on the table; these can only be allocated at creation so you cannot change this definition after you have created the resource.
+  Describe an LSI on the table; these can only be allocated at creation so you cannot change this definition after you have created the resource. Forces new resource.
+
   Default is `[]`.
 
-  ```
+  Example:
+
+  ```hcl
   local_secondary_indexes = [
     {
       name               = "someName"
@@ -219,27 +243,27 @@ See [variables.tf] and [examples/] for details and use-cases.
   ]
   ```
 
-  Each element in the list of `local_secondary_indexes` is an object with the following attributes:
+  The object accepts the following attributes:
 
-  - **`name`**: **(Required `string`)**
+  - [**`name`**](#attr-name-local_secondary_indexes): *(**Required** `string`)*<a name="attr-name-local_secondary_indexes"></a>
 
     The name of the index.
 
-  - **`range_key`**: **(Required `string`)**
+  - [**`range_key`**](#attr-range_key-local_secondary_indexes): *(**Required** `string`)*<a name="attr-range_key-local_secondary_indexes"></a>
 
     The name of the range key; must be defined.
 
-  - **`projection_type`**: **(Required `string`)**
+  - [**`projection_type`**](#attr-projection_type-local_secondary_indexes): *(**Required** `string`)*<a name="attr-projection_type-local_secondary_indexes"></a>
 
     One of `ALL`, `INCLUDE` or `KEYS_ONLY` where `ALL` projects every attribute into the index, `KEYS_ONLY` projects just the hash and range key into the index, and `INCLUDE` projects only the keys specified in the non_key_attributes parameter.
 
-  - **`non_key_attributes`**: *(Optional `list(string)`)*
+  - [**`non_key_attributes`**](#attr-non_key_attributes-local_secondary_indexes): *(Optional `list(string)`)*<a name="attr-non_key_attributes-local_secondary_indexes"></a>
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
-
+    
     This is broken in AWS provider releases 3.5.0 to 3.7.0. Ensure to remove them from the list of available versions if you are using it.
     It was again fixed in version 3.8.0.
-
+    
     ```
     terraform {
       required_providers {
@@ -250,45 +274,45 @@ See [variables.tf] and [examples/] for details and use-cases.
     }
     ```
 
-- **`global_secondary_indexes`**: *(Optional `list(global_secondary_index)`)*
+- [**`global_secondary_indexes`**](#var-global_secondary_indexes): *(Optional `list(global_secondary_index)`)*<a name="var-global_secondary_indexes"></a>
 
   Describe a GSI for the table; subject to the normal limits on the number of GSIs, projected attributes, etc.
+
   Default is `[]`.
 
-  Each element in the list of `global_secondary_indexes` is an object with the following attributes:
+  The object accepts the following attributes:
 
-  - **`name`**: **(Required `string`)**
+  - [**`name`**](#attr-name-global_secondary_indexes): *(**Required** `string`)*<a name="attr-name-global_secondary_indexes"></a>
 
     The name of the index.
 
-  - **`write_capacity`**: *(Optional `number`)*
+  - [**`write_capacity`**](#attr-write_capacity-global_secondary_indexes): *(Optional `number`)*<a name="attr-write_capacity-global_secondary_indexes"></a>
 
     The number of write units for this index. Must be set if billing_mode is set to `PROVISIONED`.
 
-  - **`read_capacity`**: *(Optional `number`)*
+  - [**`read_capacity`**](#attr-read_capacity-global_secondary_indexes): *(Optional `number`)*<a name="attr-read_capacity-global_secondary_indexes"></a>
 
     The number of read units for this index. Must be set if billing_mode is set to `PROVISIONED`.
 
-  - **`hash_key`**: **(Required `string`)**
+  - [**`hash_key`**](#attr-hash_key-global_secondary_indexes): *(**Required** `string`)*<a name="attr-hash_key-global_secondary_indexes"></a>
 
     The name of the hash key in the index; must be defined as an attribute in the resource.
 
-  - **`range_key`**: *(Optional `string`)*
+  - [**`range_key`**](#attr-range_key-global_secondary_indexes): *(Optional `string`)*<a name="attr-range_key-global_secondary_indexes"></a>
 
     The name of the range key; must be defined.
 
-  - **`projection_type`**: **(Required `string`)**
+  - [**`projection_type`**](#attr-projection_type-global_secondary_indexes): *(**Required** `string`)*<a name="attr-projection_type-global_secondary_indexes"></a>
 
     One of `ALL`, `INCLUDE` or `KEYS_ONLY` where `ALL` projects every attribute into the index, `KEYS_ONLY` projects just the hash and range key into the index, and `INCLUDE` projects only the keys specified in the non_key_attributes parameter.
 
-  - **`non_key_attributes`**: *(Optional `list(string)`)*
+  - [**`non_key_attributes`**](#attr-non_key_attributes-global_secondary_indexes): *(Optional `list(string)`)*<a name="attr-non_key_attributes-global_secondary_indexes"></a>
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
-    Default is `[]`.
-
+    
     This is broken in AWS provider releases 3.5.0 to 3.7.0. Ensure to remove them from the list of available versions if you are using it.
     It was again fixed in version 3.8.0.
-
+    
     ```
     terraform {
       required_providers {
@@ -299,12 +323,15 @@ See [variables.tf] and [examples/] for details and use-cases.
     }
     ```
 
-- **`table_tags`**: *(Optional `map(string)`)*
+    Default is `[]`.
+
+- [**`table_tags`**](#var-table_tags): *(Optional `map(string)`)*<a name="var-table_tags"></a>
 
   A map of tags to populate on the created table. This will be merged with `module_tags`.
+
   Default is `{}`.
 
-## Module Attributes Reference
+## Module Outputs
 
 The following attributes are exported by the module:
 
@@ -329,15 +356,16 @@ The following attributes are exported by the module:
   Computed table arn in the format: `arn:aws:dynamodb:<region>:<account_id>:table/<name>`.
   This value can be used to create predictable policies in cases where terraform depends on the ARN of the table that will be created in the plan phase but can only access the ARN of the table after applying it.
 
-
 ## External Documentation
 
-- AWS Documentation IAM:
-  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html
-  - https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html
+### AWS Documentation
 
-- Terraform AWS Provider Documentation:
-  - https://www.terraform.io/docs/providers/aws/r/dynamodb_table.html
+- https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html
+- https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html
+
+### Terraform AWS Provider Documentation
+
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
 
 ## Module Versioning
 
@@ -387,35 +415,28 @@ Run `make help` to see details on each available target.
 This module is licensed under the Apache License Version 2.0, January 2004.
 Please see [LICENSE] for full details.
 
-Copyright &copy; 2020 [Mineiros GmbH][homepage]
+Copyright &copy; 2020-2022 [Mineiros GmbH][homepage]
+
 
 <!-- References -->
 
 [homepage]: https://mineiros.io/?ref=terraform-aws-dynamodb
 [hello@mineiros.io]: mailto:hello@mineiros.io
-
 [badge-build]: https://github.com/mineiros-io/terraform-aws-dynamodb/workflows/CI/CD%20Pipeline/badge.svg
 [badge-semver]: https://img.shields.io/github/v/tag/mineiros-io/terraform-aws-dynamodb.svg?label=latest&sort=semver
 [badge-license]: https://img.shields.io/badge/license-Apache%202.0-brightgreen.svg
 [badge-terraform]: https://img.shields.io/badge/terraform-1.x%20|%200.15%20|%200.14%20|%200.13%20|%200.12.20+-623CE4.svg?logo=terraform
 [badge-slack]: https://img.shields.io/badge/slack-@mineiros--community-f32752.svg?logo=slack
-
-<!-- markdown-link-check-disable -->
 [build-status]: https://github.com/mineiros-io/terraform-aws-dynamodb/actions
 [releases-github]: https://github.com/mineiros-io/terraform-aws-dynamodb/releases
-<!-- markdown-link-check-enable -->
-
 [badge-tf-aws]: https://img.shields.io/badge/AWS-3%20and%202.58+-F8991D.svg?logo=terraform
 [releases-aws-provider]: https://github.com/terraform-providers/terraform-provider-aws/releases
-
 [releases-terraform]: https://github.com/hashicorp/terraform/releases
 [apache20]: https://opensource.org/licenses/Apache-2.0
 [slack]: https://join.slack.com/t/mineiros-community/shared_invite/zt-ehidestg-aLGoIENLVs6tvwJ11w9WGg
 [Terraform]: https://www.terraform.io
 [AWS]: https://aws.amazon.com/
 [Semantic Versioning (SemVer)]: https://semver.org/
-
-<!-- markdown-link-check-disable -->
 [variables.tf]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/variables.tf
 [examples/]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/examples
 [Issues]: https://github.com/mineiros-io/terraform-aws-dynamodb/issues
@@ -423,4 +444,3 @@ Copyright &copy; 2020 [Mineiros GmbH][homepage]
 [Makefile]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/Makefile
 [Pull Requests]: https://github.com/mineiros-io/terraform-aws-dynamodb/pulls
 [Contribution Guidelines]: https://github.com/mineiros-io/terraform-aws-dynamodb/blob/master/CONTRIBUTING.md
-<!-- markdown-link-check-enable -->
