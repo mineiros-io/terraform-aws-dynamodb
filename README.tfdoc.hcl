@@ -202,22 +202,6 @@ section {
 
             The DynamoDB API expects attribute structure (name and type) to be passed along when creating or updating GSI/LSIs or creating the initial table. In these cases it expects the Hash / Range keys to be provided; because these get re-used in numerous places (i.e the table's range key could be a part of one or more GSIs), they are stored on the table object to prevent duplication and increase consistency. If you add attributes here that are not used in these scenarios it can cause an infinite loop in planning.
           END
-
-          attribute "name" {
-            required    = true
-            type        = string
-            description = <<-END
-              The name of the attribute
-            END
-          }
-
-          attribute "type" {
-            required    = true
-            type        = string
-            description = <<-END
-              Attribute type, which must be a scalar type: S, N, or B for (S)tring, (N)umber or (B)inary data
-            END
-          }
         }
 
         variable "ttl_attribute_name" {
