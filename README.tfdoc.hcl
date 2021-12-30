@@ -120,8 +120,7 @@ section {
         }
 
         variable "module_depends_on" {
-          type        = any
-          readme_type = "list(dependencies)"
+          type        = list(dependency)
           description = <<-END
             A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
           END
@@ -285,8 +284,7 @@ section {
         }
 
         variable "local_secondary_indexes" {
-          type           = any
-          readme_type    = "list(local_secondary_index)"
+          type           = list(local_secondary_index)
           default        = []
           description    = <<-END
             Describe an LSI on the table; these can only be allocated at creation so you cannot change this definition after you have created the resource. Forces new resource.
@@ -348,8 +346,7 @@ section {
         }
 
         variable "global_secondary_indexes" {
-          type        = any
-          readme_type = "list(global_secondary_index)"
+          type        = list(global_secondary_index)
           default     = []
           description = <<-END
             Describe a GSI for the table; subject to the normal limits on the number of GSIs, projected attributes, etc.

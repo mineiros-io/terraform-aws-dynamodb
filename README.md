@@ -94,7 +94,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 
   Default is `{}`.
 
-- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependencies)`)*<a name="var-module_depends_on"></a>
+- [**`module_depends_on`**](#var-module_depends_on): *(Optional `list(dependency)`)*<a name="var-module_depends_on"></a>
 
   A list of dependencies. Any object can be _assigned_ to this list to define a hidden external dependency.
 
@@ -111,7 +111,7 @@ See [variables.tf] and [examples/] for details and use-cases.
 - [**`billing_mode`**](#var-billing_mode): *(Optional `string`)*<a name="var-billing_mode"></a>
 
   Controls how you are charged for read and write throughput and how you manage capacity.
-The valid values are `PROVISIONED` and `PAY_PER_REQUEST`.
+  The valid values are `PROVISIONED` and `PAY_PER_REQUEST`.
 
   Default is `"PROVISIONED"`.
 
@@ -134,28 +134,28 @@ The valid values are `PROVISIONED` and `PAY_PER_REQUEST`.
 - [**`attributes`**](#var-attributes): *(**Required** `map(string)`)*<a name="var-attributes"></a>
 
   List of nested attribute definitions. Only required for hash_key and range_key attributes.
-
-```
-hash_key = "LockID"
-
-attributes = {
-  LockID = "S"
-}
-```
-
-**A note about attributes**
-
-Only define attributes on the table object that are going to be used as:
-
-- Table hash key or range key
-- LSI or GSI hash key or range key
-
-The DynamoDB API expects attribute structure (name and type) to be passed along when creating or updating GSI/LSIs or creating the initial table. In these cases it expects the Hash / Range keys to be provided; because these get re-used in numerous places (i.e the table's range key could be a part of one or more GSIs), they are stored on the table object to prevent duplication and increase consistency. If you add attributes here that are not used in these scenarios it can cause an infinite loop in planning.
+  
+  ```
+  hash_key = "LockID"
+  
+  attributes = {
+    LockID = "S"
+  }
+  ```
+  
+  **A note about attributes**
+  
+  Only define attributes on the table object that are going to be used as:
+  
+  - Table hash key or range key
+  - LSI or GSI hash key or range key
+  
+  The DynamoDB API expects attribute structure (name and type) to be passed along when creating or updating GSI/LSIs or creating the initial table. In these cases it expects the Hash / Range keys to be provided; because these get re-used in numerous places (i.e the table's range key could be a part of one or more GSIs), they are stored on the table object to prevent duplication and increase consistency. If you add attributes here that are not used in these scenarios it can cause an infinite loop in planning.
 
 - [**`ttl_attribute_name`**](#var-ttl_attribute_name): *(Optional `string`)*<a name="var-ttl_attribute_name"></a>
 
   The name of the table attribute to store the TTL timestamp in.
-Default is not to store TTL timestamp.
+  Default is not to store TTL timestamp.
 
 - [**`ttl_enabled`**](#var-ttl_enabled): *(Optional `bool`)*<a name="var-ttl_enabled"></a>
 
@@ -188,31 +188,31 @@ Default is not to store TTL timestamp.
 - [**`stream_view_type`**](#var-stream_view_type): *(Optional `string`)*<a name="var-stream_view_type"></a>
 
   When an item in the table is modified, StreamViewType determines what information is written to the table's stream.
-Valid values are `KEYS_ONLY`, `NEW_IMAGE`, `OLD_IMAGE`, `NEW_AND_OLD_IMAGES`.
+  Valid values are `KEYS_ONLY`, `NEW_IMAGE`, `OLD_IMAGE`, `NEW_AND_OLD_IMAGES`.
 
 - [**`kms_type`**](#var-kms_type): *(Optional `string`)*<a name="var-kms_type"></a>
 
   Can be one of `AWS_OWNED`, `AWS_MANAGED`, or `CUSTOMER_MANAGED`.
-
-When creating a new table, you can choose one of the following customer master keys (CMK) to encrypt your table:
-
-- AWS owned CMK - Default encryption type. The key is owned by DynamoDB (no additional charge).
-- AWS managed CMK - The key is stored in your account and is managed by AWS KMS (AWS KMS charges apply).
-- Customer managed CMK - The key is stored in your account and is created, owned, and managed by you. You have full control over the CMK (AWS KMS charges apply).
-
-You can switch between the AWS owned CMK, AWS managed CMK, and customer managed CMK at any given time.
-
-**Attention**: When using the AWS onwed CMK terraform will show `enabled = false` in the `server_side_encryption` block in the plan.
-
-Default is `AWS_OWNED` when no `kms_key_arn` is specified, if `kms_key_arn` is set, the default is `CUSTOMER_MANAGED`.
+  
+  When creating a new table, you can choose one of the following customer master keys (CMK) to encrypt your table:
+  
+  - AWS owned CMK - Default encryption type. The key is owned by DynamoDB (no additional charge).
+  - AWS managed CMK - The key is stored in your account and is managed by AWS KMS (AWS KMS charges apply).
+  - Customer managed CMK - The key is stored in your account and is created, owned, and managed by you. You have full control over the CMK (AWS KMS charges apply).
+  
+  You can switch between the AWS owned CMK, AWS managed CMK, and customer managed CMK at any given time.
+  
+  **Attention**: When using the AWS onwed CMK terraform will show `enabled = false` in the `server_side_encryption` block in the plan.
+  
+  Default is `AWS_OWNED` when no `kms_key_arn` is specified, if `kms_key_arn` is set, the default is `CUSTOMER_MANAGED`.
 
 - [**`kms_key_arn`**](#var-kms_key_arn): *(Optional `string`)*<a name="var-kms_key_arn"></a>
 
   The ARN of the CMK that should be used for the AWS KMS encryption (`kms_type = "CUSTOMER_MANAGED"`).
-
-AWS DynamoDB tables are automatically encrypted at rest with an AWS owned Customer Master Key if this argument isn't specified.
-If you want to use the default DynamoDB CMK, `alias/aws/dynamodb` specify `kms_type = "AWS_OWNED"` and do not set the `kms_key_arn`.
-Default is to use the AWS owned Master key (`kms_type = "AWS_OWNED"`).
+  
+  AWS DynamoDB tables are automatically encrypted at rest with an AWS owned Customer Master Key if this argument isn't specified.
+  If you want to use the default DynamoDB CMK, `alias/aws/dynamodb` specify `kms_type = "AWS_OWNED"` and do not set the `kms_key_arn`.
+  Default is to use the AWS owned Master key (`kms_type = "AWS_OWNED"`).
 
 - [**`local_secondary_indexes`**](#var-local_secondary_indexes): *(Optional `list(local_secondary_index)`)*<a name="var-local_secondary_indexes"></a>
 
@@ -233,21 +233,21 @@ Default is to use the AWS owned Master key (`kms_type = "AWS_OWNED"`).
   ]
   ```
 
-  The object accepts the following attributes:
+  Each `local_secondary_index` object in the list accepts the following attributes:
 
-  - [**`name`**](#attr-name-local_secondary_indexes): *(**Required** `string`)*<a name="attr-name-local_secondary_indexes"></a>
+  - [**`name`**](#attr-local_secondary_indexes-name): *(**Required** `string`)*<a name="attr-local_secondary_indexes-name"></a>
 
     The name of the index.
 
-  - [**`range_key`**](#attr-range_key-local_secondary_indexes): *(**Required** `string`)*<a name="attr-range_key-local_secondary_indexes"></a>
+  - [**`range_key`**](#attr-local_secondary_indexes-range_key): *(**Required** `string`)*<a name="attr-local_secondary_indexes-range_key"></a>
 
     The name of the range key; must be defined.
 
-  - [**`projection_type`**](#attr-projection_type-local_secondary_indexes): *(**Required** `string`)*<a name="attr-projection_type-local_secondary_indexes"></a>
+  - [**`projection_type`**](#attr-local_secondary_indexes-projection_type): *(**Required** `string`)*<a name="attr-local_secondary_indexes-projection_type"></a>
 
     One of `ALL`, `INCLUDE` or `KEYS_ONLY` where `ALL` projects every attribute into the index, `KEYS_ONLY` projects just the hash and range key into the index, and `INCLUDE` projects only the keys specified in the non_key_attributes parameter.
 
-  - [**`non_key_attributes`**](#attr-non_key_attributes-local_secondary_indexes): *(Optional `list(string)`)*<a name="attr-non_key_attributes-local_secondary_indexes"></a>
+  - [**`non_key_attributes`**](#attr-local_secondary_indexes-non_key_attributes): *(Optional `list(string)`)*<a name="attr-local_secondary_indexes-non_key_attributes"></a>
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
     
@@ -270,33 +270,33 @@ Default is to use the AWS owned Master key (`kms_type = "AWS_OWNED"`).
 
   Default is `[]`.
 
-  The object accepts the following attributes:
+  Each `global_secondary_index` object in the list accepts the following attributes:
 
-  - [**`name`**](#attr-name-global_secondary_indexes): *(**Required** `string`)*<a name="attr-name-global_secondary_indexes"></a>
+  - [**`name`**](#attr-global_secondary_indexes-name): *(**Required** `string`)*<a name="attr-global_secondary_indexes-name"></a>
 
     The name of the index.
 
-  - [**`write_capacity`**](#attr-write_capacity-global_secondary_indexes): *(Optional `number`)*<a name="attr-write_capacity-global_secondary_indexes"></a>
+  - [**`write_capacity`**](#attr-global_secondary_indexes-write_capacity): *(Optional `number`)*<a name="attr-global_secondary_indexes-write_capacity"></a>
 
     The number of write units for this index. Must be set if billing_mode is set to `PROVISIONED`.
 
-  - [**`read_capacity`**](#attr-read_capacity-global_secondary_indexes): *(Optional `number`)*<a name="attr-read_capacity-global_secondary_indexes"></a>
+  - [**`read_capacity`**](#attr-global_secondary_indexes-read_capacity): *(Optional `number`)*<a name="attr-global_secondary_indexes-read_capacity"></a>
 
     The number of read units for this index. Must be set if billing_mode is set to `PROVISIONED`.
 
-  - [**`hash_key`**](#attr-hash_key-global_secondary_indexes): *(**Required** `string`)*<a name="attr-hash_key-global_secondary_indexes"></a>
+  - [**`hash_key`**](#attr-global_secondary_indexes-hash_key): *(**Required** `string`)*<a name="attr-global_secondary_indexes-hash_key"></a>
 
     The name of the hash key in the index; must be defined as an attribute in the resource.
 
-  - [**`range_key`**](#attr-range_key-global_secondary_indexes): *(Optional `string`)*<a name="attr-range_key-global_secondary_indexes"></a>
+  - [**`range_key`**](#attr-global_secondary_indexes-range_key): *(Optional `string`)*<a name="attr-global_secondary_indexes-range_key"></a>
 
     The name of the range key; must be defined.
 
-  - [**`projection_type`**](#attr-projection_type-global_secondary_indexes): *(**Required** `string`)*<a name="attr-projection_type-global_secondary_indexes"></a>
+  - [**`projection_type`**](#attr-global_secondary_indexes-projection_type): *(**Required** `string`)*<a name="attr-global_secondary_indexes-projection_type"></a>
 
     One of `ALL`, `INCLUDE` or `KEYS_ONLY` where `ALL` projects every attribute into the index, `KEYS_ONLY` projects just the hash and range key into the index, and `INCLUDE` projects only the keys specified in the non_key_attributes parameter.
 
-  - [**`non_key_attributes`**](#attr-non_key_attributes-global_secondary_indexes): *(Optional `list(string)`)*<a name="attr-non_key_attributes-global_secondary_indexes"></a>
+  - [**`non_key_attributes`**](#attr-global_secondary_indexes-non_key_attributes): *(Optional `list(string)`)*<a name="attr-global_secondary_indexes-non_key_attributes"></a>
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
     
