@@ -434,28 +434,37 @@ section {
     title   = "Module Outputs"
     content = <<-END
       The following attributes are exported by the module:
-
-      - **`module_enabled`**
-
-        Whether this module is enabled.
-
-      - **`module_inputs`**
-
-        A map of all module arguments. Omitted optional arguments will be represented with their actual defaults.
-
-      - **`module_tags`**
-
-        The map of tags that are being applied to all created resources that accept tags.
-
-      - **`table`**
-
-        The full `aws_dynamodb_table` object with all its attributes.
-
-      - **`computed_arn`**
-
-        Computed table arn in the format: `arn:aws:dynamodb:<region>:<account_id>:table/<name>`.
-        This value can be used to create predictable policies in cases where terraform depends on the ARN of the table that will be created in the plan phase but can only access the ARN of the table after applying it.
     END
+
+    output "module_enabled" {
+      type        = bool
+      description = <<-END
+        Whether this module is enabled.
+      END
+    }
+
+    output "module_inputs" {
+      type        = map(module_inputs)
+      description = <<-END
+        A map of all module arguments. Omitted optional arguments will be
+        represented with their actual defaults.
+      END
+    }
+
+    output "module_tags" {
+      type        = map(string)
+      description = <<-END
+        The map of tags that are being applied to all created resources that
+        accept tags.
+      END
+    }
+
+    output "table" {
+      type        = object(table)
+      description = <<-END
+        The full `aws_dynamodb_table` object with all its attributes.
+      END
+    }
   }
 
   section {

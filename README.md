@@ -134,22 +134,22 @@ See [variables.tf] and [examples/] for details and use-cases.
 - [**`attributes`**](#var-attributes): *(**Required** `map(string)`)*<a name="var-attributes"></a>
 
   List of nested attribute definitions. Only required for hash_key and range_key attributes.
-  
+
   ```
   hash_key = "LockID"
-  
+
   attributes = {
     LockID = "S"
   }
   ```
-  
+
   **A note about attributes**
-  
+
   Only define attributes on the table object that are going to be used as:
-  
+
   - Table hash key or range key
   - LSI or GSI hash key or range key
-  
+
   The DynamoDB API expects attribute structure (name and type) to be passed along when creating or updating GSI/LSIs or creating the initial table. In these cases it expects the Hash / Range keys to be provided; because these get re-used in numerous places (i.e the table's range key could be a part of one or more GSIs), they are stored on the table object to prevent duplication and increase consistency. If you add attributes here that are not used in these scenarios it can cause an infinite loop in planning.
 
 - [**`ttl_attribute_name`**](#var-ttl_attribute_name): *(Optional `string`)*<a name="var-ttl_attribute_name"></a>
@@ -193,23 +193,23 @@ See [variables.tf] and [examples/] for details and use-cases.
 - [**`kms_type`**](#var-kms_type): *(Optional `string`)*<a name="var-kms_type"></a>
 
   Can be one of `AWS_OWNED`, `AWS_MANAGED`, or `CUSTOMER_MANAGED`.
-  
+
   When creating a new table, you can choose one of the following customer master keys (CMK) to encrypt your table:
-  
+
   - AWS owned CMK - Default encryption type. The key is owned by DynamoDB (no additional charge).
   - AWS managed CMK - The key is stored in your account and is managed by AWS KMS (AWS KMS charges apply).
   - Customer managed CMK - The key is stored in your account and is created, owned, and managed by you. You have full control over the CMK (AWS KMS charges apply).
-  
+
   You can switch between the AWS owned CMK, AWS managed CMK, and customer managed CMK at any given time.
-  
+
   **Attention**: When using the AWS onwed CMK terraform will show `enabled = false` in the `server_side_encryption` block in the plan.
-  
+
   Default is `AWS_OWNED` when no `kms_key_arn` is specified, if `kms_key_arn` is set, the default is `CUSTOMER_MANAGED`.
 
 - [**`kms_key_arn`**](#var-kms_key_arn): *(Optional `string`)*<a name="var-kms_key_arn"></a>
 
   The ARN of the CMK that should be used for the AWS KMS encryption (`kms_type = "CUSTOMER_MANAGED"`).
-  
+
   AWS DynamoDB tables are automatically encrypted at rest with an AWS owned Customer Master Key if this argument isn't specified.
   If you want to use the default DynamoDB CMK, `alias/aws/dynamodb` specify `kms_type = "AWS_OWNED"` and do not set the `kms_key_arn`.
   Default is to use the AWS owned Master key (`kms_type = "AWS_OWNED"`).
@@ -250,10 +250,10 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`non_key_attributes`**](#attr-local_secondary_indexes-non_key_attributes): *(Optional `list(string)`)*<a name="attr-local_secondary_indexes-non_key_attributes"></a>
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
-    
+
     This is broken in AWS provider releases 3.5.0 to 3.7.0. Ensure to remove them from the list of available versions if you are using it.
     It was again fixed in version 3.8.0.
-    
+
     ```
     terraform {
       required_providers {
@@ -299,10 +299,10 @@ See [variables.tf] and [examples/] for details and use-cases.
   - [**`non_key_attributes`**](#attr-global_secondary_indexes-non_key_attributes): *(Optional `list(string)`)*<a name="attr-global_secondary_indexes-non_key_attributes"></a>
 
     Only required with `INCLUDE` as a projection type; a list of attributes to project into the index. These do not need to be defined as attributes on the table.
-    
+
     This is broken in AWS provider releases 3.5.0 to 3.7.0. Ensure to remove them from the list of available versions if you are using it.
     It was again fixed in version 3.8.0.
-    
+
     ```
     terraform {
       required_providers {
@@ -325,26 +325,23 @@ See [variables.tf] and [examples/] for details and use-cases.
 
 The following attributes are exported by the module:
 
-- **`module_enabled`**
+- [**`module_enabled`**](#output-module_enabled): *(`bool`)*<a name="output-module_enabled"></a>
 
   Whether this module is enabled.
 
-- **`module_inputs`**
+- [**`module_inputs`**](#output-module_inputs): *(`map(module_inputs)`)*<a name="output-module_inputs"></a>
 
-  A map of all module arguments. Omitted optional arguments will be represented with their actual defaults.
+  A map of all module arguments. Omitted optional arguments will be
+  represented with their actual defaults.
 
-- **`module_tags`**
+- [**`module_tags`**](#output-module_tags): *(`map(string)`)*<a name="output-module_tags"></a>
 
-  The map of tags that are being applied to all created resources that accept tags.
+  The map of tags that are being applied to all created resources that
+  accept tags.
 
-- **`table`**
+- [**`table`**](#output-table): *(`object(table)`)*<a name="output-table"></a>
 
   The full `aws_dynamodb_table` object with all its attributes.
-
-- **`computed_arn`**
-
-  Computed table arn in the format: `arn:aws:dynamodb:<region>:<account_id>:table/<name>`.
-  This value can be used to create predictable policies in cases where terraform depends on the ARN of the table that will be created in the plan phase but can only access the ARN of the table after applying it.
 
 ## External Documentation
 
