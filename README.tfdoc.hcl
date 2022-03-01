@@ -77,8 +77,7 @@ section {
 
       ```hcl
       module "terraform-aws-dynamodb" {
-        source  = "mineiros-io/dynamodb/aws"
-        version = "~> 0.6.0"
+        source  = "git@github.com:mineiros-io/terraform-aws-dynamodb.git?ref=v0.6.0"
 
         name     = "MyTable"
         hash_key = "HashKey"
